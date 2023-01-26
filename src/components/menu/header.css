@@ -1,0 +1,38 @@
+.header {
+    width: 100%;
+    background-color: #6c81f4;
+    display: flex;
+}
+
+.head-element {
+    width: 40px;
+    border-left: 2px solid #b9d7fb;
+    border-right: 2px solid #b9d7fb;
+    background-color: #6c81f4;
+    transition: all 0.5s;
+}
+
+.head-element:hover {
+    animation: head-anime 0.25s forwards;
+}
+
+@keyframes head-anime {
+    0% {
+        background-color: #6c81f4;
+    }
+
+    100% {
+        background-color: #2f4ff0;
+        transform: scale(1.05);
+    }
+}
+
+
+.head-logo {
+    width: 5vw;
+    max-width: 30px;
+    margin-top: 5px;
+    margin-left: 5px;
+    user-select: none;
+    pointer-events: none;
+}
