@@ -43,7 +43,7 @@ export const CanvasMain = () => {
 
     const CanvasSize = useMemo(() => {
         let width = GlobalValue.CanvasProperty?.width;
-        let height = GlobalValue.CanvasProperty?.width;
+        let height = GlobalValue.CanvasProperty?.width; // <- あってる？
         return [width, height]
     }, [GlobalValue.CanvasProperty]);
 
