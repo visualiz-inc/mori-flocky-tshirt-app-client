@@ -1,0 +1,29 @@
+.header {
+    display:flex;
+    position: relative;
+}
+.header h1{
+    font-size: 20px;
+    line-height: 0px;
+}
+.header img{
+    height: 25px;
+}
+.header button {
+    position: absolute;
+    right: 0;
+}
+.header button svg {
+    background: rgb(100, 100, 100);
+    border-radius: 15px;
+    color: aliceblue;
+}
+.header button div {
+    width: 5px;
+}
+.header button p {
+    color: rgb(100, 100, 100);
+    font-weight: bold;
+    line-height: 0px;
+    font-size: 20px;
+}

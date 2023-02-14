@@ -1,20 +1,27 @@
 import React, { useRef, useEffect, useContext } from "react";
-import { KonvaNodeComponent, Transformer } from 'react-konva';
-import Konva from 'konva';
-import { GlobalContext } from "../providers/GlobalProvider";
+import { Rect, Circle, RegularPolygon, Text, Transformer } from 'react-konva';
+import { GlobalContext } from "../../providers/GlobalProvider";
+
+import { Shape } from '../../../Types'
+import { KonvaEventObject } from "konva/lib/Node";
+import Konva from "konva";
 
 export const CanvasDraw = (props: {
-    index: object,
-    shapeProps: any,
+    index: number,
+    shapeProps: Shape,
     isSelected: boolean,
-    onSelect: Function,
+    onSelect: (evt: KonvaEventObject<MouseEvent> | KonvaEventObject<TouchEvent>) => void
     onChange: Function
 }) => {
-    const GlobalValue: { SideProperty?: any } = useContext(GlobalContext);
+    const GlobalValue: {
+        State?: {
+            SetProperty: React.Dispatch<React.SetStateAction<Shape & { index: number } | null>>
+        }
+    } = useContext(GlobalContext);
     const shapeRef: React.MutableRefObject<null> = useRef(null);  //useRef currentプロパティに値を保持する
     const trRef = useRef<Konva.Transformer>(null);
 
-    const Property = {
+    const DrawProperty = {
         ...props.shapeProps,    //図形のスタイル等
         draggable: true,    //ドラッグ有効
         onClick: props.onSelect,  //クリックで選択状態
@@ -32,49 +39,47 @@ export const CanvasDraw = (props: {
 
     useEffect(() => {
         if (props.isSelected) {   //選択されている際に実行
-            // we need to attach transformer manually
-            trRef.current?.nodes([shapeRef.current]); // <-ここ使い方あってる？
-            trRef.current?.getLayer()?.batchDraw();
-            //この図形が位置するレイヤーを"次のtickに"再描画
+            trRef.current?.nodes([shapeRef.current!]); // <-ここ使い方あってる？
+            trRef.current?.getLayer()!.batchDraw();
 
             UpdateProperty();
-
-            const elem = document.getElementsByClassName('Side')[0];
-
-            if (elem) {
-                document.getElementsByClassName('Side')[0].animate({
-                    right: '0px',
-                }, {
-                    duration: 500,
-                    fill: 'forwards',
-                    easing: 'ease-in'
-                });
-            }
         }
     }, [props.isSelected]); //isSelectedを監視
 
     function UpdateProperty() {
-        GlobalValue.SideProperty.SetProperty({
+        GlobalValue.State!.SetProperty({
             ...NodeProperty(),
         });
 
+        const elem: HTMLDivElement = document.querySelector('div.Side')!;
+        if (elem) {
+            document.getElementsByClassName('Side')[0].animate({
+                right: '0px',
+            }, {
+                duration: 500,
+                fill: 'forwards',
+                easing: 'ease-in'
+            });
+        }
+
+
     }
 
-    function NodeProperty() {
-        const node: any = shapeRef.current!;
+    function NodeProperty() {   //nodeメソッドの場合直代入 返り値はSideへ
+        const node: Konva.Node = shapeRef.current!;
         let rotation: number = Math.round(node.rotation());
         if (rotation < 0) rotation = 360 + rotation;  //値を使いやすくする
+
         return {
             ...props.shapeProps,    //図形のスタイル等
             index: props.index,
 
             rotation: rotation,
-
             width: Math.ceil(node.width() * 10) / 10,
             height: Math.ceil(node.height() * 10) / 10,
 
-            x: Math.round(node.x()),  //x座標を更新
-            y: Math.round(node.y()),  //y座標を更新
+            x: Math.round(node.x()), 
+            y: Math.round(node.y()),  //x,y座標を更新
 
             scaleX: Math.round(node.scaleX() * 100) / 100,   //widthを更新
             scaleY: Math.round(node.scaleY() * 100) / 100, //heightを更新
@@ -83,7 +88,19 @@ export const CanvasDraw = (props: {
 
     return (
         <>
-            <props.shapeProps.type {...Property} />
+            {props.shapeProps.type == 'Rect' && (
+                <Rect {...DrawProperty} />
+            )}
+            {props.shapeProps.type == 'Circle' && (
+                <Circle {...DrawProperty} />
+            )}
+            {props.shapeProps.type == 'RegularPolygon' && (
+                <RegularPolygon sides={0} radius={0} {...DrawProperty} />
+            )}
+            {props.shapeProps.type == 'Text' && (
+                <Text {...DrawProperty} />
+            )}
+
 
             {props.isSelected && (  //isSelected == true
                 <Transformer

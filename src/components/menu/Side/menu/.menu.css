@@ -1,0 +1,58 @@
+#defaultMenu {
+    display:flex;
+    flex-flow: column;
+    margin-top: 25px;
+}
+
+#defaultMenu button {
+    color: rgb(255, 255, 255);
+    margin-left: 10px;
+}
+#defaultMenu img {
+    background: rgb(45, 45, 45);
+    width: 38px;
+    padding: 12px;
+    margin-left: -10px;
+    border-radius: 10px;
+    justify-content: left;
+    pointer-events: none;
+}
+#defaultMenu p {
+    color: rgb(0, 0, 0);
+    font: bold 18px 'メイリオ';
+    line-height: 0px;
+    width: 200px;
+    pointer-events: none;
+}
+
+
+#itemMenu h1 {
+    text-align: center;
+    font: bold 24px 'メイリオ';
+    line-height: 12px;
+}
+#itemMenu p {
+    margin-top: -10px;
+    margin-left: 10px;
+    font: 600 12px 'メイリオ';
+    word-break: break-all;
+}
+#itemMenu #p1 {
+    margin-top: 30px;
+}
+#ColorSelect{
+    margin-left: 5%;
+}
+#ItemChangeButton{
+    background-color: rgb(200, 77, 150);
+    color: aliceblue;
+    border-radius: 15px;
+    
+    display:block;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    min-width: 65%;
+    min-height: 65px;
+}

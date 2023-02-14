@@ -3,10 +3,21 @@ import { Common } from './common';
 import '../side.css';
 import { GlobalContext } from "../../providers/GlobalProvider";
 
-export const PositionX = (props:{obj:any,index:number[],Value:number}) => {
-  const GlbalValue: {Canvas?:Object,SideProperty?:Object} = useContext(GlobalContext);
+import { AllShape,Shape } from "../../../Types"
 
-  const [Value,SetValue] = useState(props.Value);
+export const PositionX = (props:{index:number,Value:number}) => {
+  const GlbalValue: {
+    Canvas?:{
+                Object: Shape[],
+                SetObject: React.Dispatch<React.SetStateAction<Shape[]>>
+            },
+    SideProperty?:{
+      Property: AllShape,
+      SetProperty:React.Dispatch<React.SetStateAction<Shape & {index:number} | null>>
+        },
+  } = useContext(GlobalContext);
+
+  const [Value,SetValue] = useState<number>(props.Value);
   useEffect(() => {
     Common('x', GlbalValue.Canvas, GlbalValue.SideProperty, Value, props.index);
   },[Value]);
@@ -26,10 +37,19 @@ export const PositionX = (props:{obj:any,index:number[],Value:number}) => {
  )
 }
 
-export const PositionY = (props:{obj:any,index:number[],Value:number}) => {
-  const GlbalValue: {Canvas?:Object,SideProperty?:Object} = useContext(GlobalContext);
+export const PositionY = (props:{index:number,Value:number}) => {
+  const GlbalValue: {
+    Canvas?:{
+                Object: Shape[],
+                SetObject: React.Dispatch<React.SetStateAction<Shape[]>>
+            },
+    SideProperty?:{
+      Property: AllShape,
+      SetProperty:React.Dispatch<React.SetStateAction<Shape & {index:number} | null>>
+        },
+  } = useContext(GlobalContext);
 
-  const [Value,SetValue] = useState(props.Value);
+  const [Value,SetValue] = useState<number>(props.Value);
   useEffect(() => {
     Common('y', GlbalValue.Canvas, GlbalValue.SideProperty, Value, props.index);
   },[Value]);

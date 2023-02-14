@@ -1,96 +1,47 @@
 import { createContext, useState, ReactNode } from "react";
+import { Prop, Svg, Rect, RegularPolygon, Circle, Text, AllShape, TshirtType, MaskType } from "../../Types"
+
+import ObjectJsonData from '../../json/Object.json';
+import ItemJsonData from '../../json/Item.json';
 
 export const GlobalContext = createContext({});
-type Children = {
-  children: ReactNode
-}
 
-export const GlobalProvider = (props: Children) => {
-    const { children } = props;
+export const GlobalProvider = (props: { children: ReactNode }) => {
+  const { children } = props;
 
-    const [Object, SetObject] = useState({
-          'Layer1':[
-            {
-              type: 'Rect',
-              x: 40,
-              y: 10,
-              width: 50,
-              height: 50,
-              scaleX:1,
-              scaleY:1,
-              rotation: 45,
-              fill: '#00ff66',
-              opacity: 1,
-              cornerRadius: 5,
-              strokeWidth: 5,
-              stroke: '#000000',
-              id: 'object0',
-            },
-            {
-              type: 'RegularPolygon',
-              x: 150,
-              y: 150,
-              sides: 3,
-              radius: 70,
-              scaleX:1,
-              scaleY:1,
-              rotation: 0,
-              fill: '#ff0055',
-              opacity: 1,
-              strokeWidth: 0,
-              stroke: '#000000',
-              id: 'object1',
-            },
-            {
-              type: 'Circle',
-              x: 100,
-              y: 50,
-              radius: 30,
-              scaleX:1,
-              scaleY:1,
-              rotation: 0,
-              fill: '#0000ff',
-              opacity: 1,
-              strokeWidth: 0,
-              stroke: '#000000',
-              id: 'object2',
-            }
-          ],
-          'Layer2':[
-            {
-              type: 'Text',
-              x: 10,
-              y: 100,
-              scaleX:1,
-              scaleY:1,
-              fill: '#000000',
-              opacity: 1,
-              text: 'Hello World!',
-              fontSize: 30,
-              fontFamily: 'メイリオ',
-              fontStyle: '',
-              rotation: 340,
-              strokeWidth: 0,
-              stroke: '#000000',
-              id: 'object3',
-            }
-          ]
-        })
-    const [Property,SetProperty] = useState(null);
 
-    const global = {
-        Canvas: {Object, SetObject},
-        CanvasProperty: {
-          width: 510,
-          height: 400,
-          border: '2px solid #000000'
-        },
-        SideProperty: {Property , SetProperty}
+  const [Object, SetObject] = useState<(Rect | RegularPolygon | Circle | Text | Svg)[]>(ObjectJsonData["Object"]);
+
+  const [Property, SetProperty] =
+    useState<Rect | RegularPolygon | Circle | Text | Svg | null>(null);
+
+  const [Color, SetColor] =
+    useState<string>('ホワイト'); //アイテムの色設定
+
+  const ItemsData: (TshirtType | MaskType)[] = ItemJsonData["Item"];  //Tシャツのデータ
+  const [Item, SetItem] = useState<TshirtType | MaskType>(ItemsData[0]);  //初期アイテム設定
+
+  const [MainWindowProperty, SetMainWindowProperty] = useState<string>("Canvas");  //メインウィンドウの表示切り替え
+
+  const Global = {
+    CanvasProperty: {
+      Width: 300,
+      Height: 380,
+      Border: '2px dashed #ffffff'
+    } as Prop,
+    ItemsData,
+    State: {
+      Object, SetObject,
+      Property, SetProperty,
+      Color, SetColor,
+      Item, SetItem,
+      MainWindowProperty, SetMainWindowProperty
     }
+  }
 
-    return (
-        <GlobalContext.Provider value = {global}>
-            {children}
-        </GlobalContext.Provider>
-    );
+  return (
+    <GlobalContext.Provider value={Global}>
+      {children}
+    </GlobalContext.Provider>
+  );
 };

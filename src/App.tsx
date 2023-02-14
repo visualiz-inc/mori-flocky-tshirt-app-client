@@ -1,19 +1,39 @@
 import { useContext } from 'react';
 import { GlobalContext } from './components/providers/GlobalProvider';
+import { Shape } from "./Types"
 
-import { TShirt } from './components/canvas/TShirt';
-import { Header } from './components/menu/Headmenu';
+import { Header } from './components/menu/Head/Header';
 import { Side } from './components/menu/Sidemenu';
+import { Sidebar } from './components/menu/Side/Sidebar';
+import { MainWindow } from './components/main/MainWindow';
+
+
 
 export const App = () => {
-  const GlbalValue: {SideProperty?:any} = useContext(GlobalContext);
-  const property = GlbalValue.SideProperty.Property;
+  const GlobalValue: { State?: { Property: Shape } } = useContext(GlobalContext);
+  if (GlobalValue.State) {
+    const Property = GlobalValue.State.Property;
+    return (
+      <>
+      <div style={{
+        marginLeft:'5vw',
+        width:'90vw'
+        }}>
 
-  return (
-    <>
-      <Header />
-      <TShirt />
-      {property != null && <Side />}
-    </>
-  );
-};
+        <Header />
+        <div style={{display:'flex'}}>
+          <Sidebar />
+          <MainWindow />
+
+        </div>
+        {Property && <Side />}
+        </div>
+      </>
+      
+    );
+  } else {
+    return (
+      <p>Loading</p>
+    )
+  }
+}

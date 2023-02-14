@@ -3,10 +3,21 @@ import { Common } from './common';
 import '../side.css';
 import { GlobalContext } from "../../providers/GlobalProvider";
 
-export const Radius = (props:{obj:any,index:number[],Value:number}) => {
-  const GlbalValue: {Canvas?:Object,SideProperty?:Object} = useContext(GlobalContext);
+import { AllShape,Shape } from "../../../Types"
 
-  const [Value,SetValue] = useState(props.Value);
+export const Radius = (props:{index:number,Value:number}) => {
+  const GlbalValue: {
+    Canvas?:{
+                Object: Shape[],
+                SetObject: React.Dispatch<React.SetStateAction<Shape[]>>
+            },
+    SideProperty?:{
+      Property: AllShape,
+      SetProperty:React.Dispatch<React.SetStateAction<Shape & {index:number} | null>>
+        },
+  } = useContext(GlobalContext);
+
+  const [Value,SetValue] = useState<number>(props.Value);
   useEffect(() => {
     Common('radius', GlbalValue.Canvas, GlbalValue.SideProperty, Value, props.index);
   },[Value]);
@@ -15,8 +26,6 @@ export const Radius = (props:{obj:any,index:number[],Value:number}) => {
       SetValue(Number(e.target.value));
     },[]
   )
-
-      
           return (
             <>
               <div className='SideText'>

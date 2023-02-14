@@ -3,11 +3,22 @@ import { Common } from './common';
 import '../side.css';
 import { GlobalContext } from "../../providers/GlobalProvider";
 
+import { AllShape,Shape } from "../../../Types"
 
-export const ScaleX = (props:{obj:any,index:number[],Value:number}) => {
-  const GlbalValue: {Canvas?:Object,SideProperty?:Object} = useContext(GlobalContext);
 
-  const [Value,SetValue] = useState(props.Value);
+export const ScaleX = (props:{index:number,Value:number}) => {
+  const GlbalValue: {
+    Canvas?:{
+                Object: Shape[],
+                SetObject: React.Dispatch<React.SetStateAction<Shape[]>>
+            },
+    SideProperty?:{
+      Property: AllShape,
+      SetProperty:React.Dispatch<React.SetStateAction<Shape & {index:number} | null>>
+        },
+  } = useContext(GlobalContext);
+
+  const [Value,SetValue] = useState<number>(props.Value);
   useEffect(() => {
     Common('scaleX', GlbalValue.Canvas, GlbalValue.SideProperty, Value, props.index);
   },[Value]);
@@ -25,10 +36,19 @@ export const ScaleX = (props:{obj:any,index:number[],Value:number}) => {
 }
 
 
-export const ScaleY = (props:{obj:any,index:number[],Value:number}) => {
-  const GlbalValue: {Canvas?:Object,SideProperty?:Object} = useContext(GlobalContext);
+export const ScaleY = (props:{index:number,Value:number}) => {
+  const GlbalValue: {
+    Canvas?:{
+                Object: Shape[],
+                SetObject: React.Dispatch<React.SetStateAction<Shape[]>>
+            },
+    SideProperty?:{
+      Property: AllShape,
+      SetProperty:React.Dispatch<React.SetStateAction<Shape & {index:number} | null>>
+        },
+  } = useContext(GlobalContext);
 
-  const [Value,SetValue] = useState(props.Value);
+  const [Value,SetValue] = useState<number>(props.Value);
   useEffect(() => {
     Common('scaleY', GlbalValue.Canvas, GlbalValue.SideProperty, Value, props.index);
   },[Value]);
@@ -40,7 +60,7 @@ export const ScaleY = (props:{obj:any,index:number[],Value:number}) => {
           return (
             <div className='SideText'>
               <p className='SideItem'>拡大率Y:</p>
-              <input type="number" step="0.1" className='SideValue' value = {Value} onChange={ChangeValue}/>
+              <input type="number" step="0.01" className='SideValue' value = {props.Value} onChange={ChangeValue}/>
             </div>
          )
 }

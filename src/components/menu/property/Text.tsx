@@ -3,10 +3,21 @@ import { Common } from './common';
 import '../side.css';
 import { GlobalContext } from "../../providers/GlobalProvider";
 
-export const Text = (props:{obj:any,index:number[],Value:string}) => {
-  const GlbalValue: {Canvas?:HTMLElement,SideProperty?:HTMLElement} = useContext(GlobalContext);
+import { AllShape,Shape } from "../../../Types"
 
-  const [Value,SetValue] = useState(props.Value);
+export const Text = (props:{index:number,Value:string}) => {
+  const GlbalValue: {
+    Canvas?:{
+                Object: Shape[],
+                SetObject: React.Dispatch<React.SetStateAction<Shape[]>>
+            },
+    SideProperty?:{
+      Property: AllShape,
+      SetProperty:React.Dispatch<React.SetStateAction<Shape & {index:number} | null>>
+        },
+  } = useContext(GlobalContext);
+
+  const [Value,SetValue] = useState<string>(props.Value);
   useEffect(() => {
     Common('Text', GlbalValue.Canvas, GlbalValue.SideProperty, Value, props.index);
   },[Value]);

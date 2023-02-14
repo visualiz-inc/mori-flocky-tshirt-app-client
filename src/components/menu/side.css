@@ -1,36 +1,34 @@
-.Side {
+.Side{
     position: absolute;
     top: 60px;
-    right: -260px;
     width: 250px;
-    height: 85%;
+    height:85%;
     background-color: rgb(145, 145, 145, 0.8);
     border: 2px dashed rgb(67, 67, 67);
     overflow-y: scroll;
     overflow-x: hidden;
 
     animation-name: side-anime;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
+    animation-duration:1s;
+    animation-fill-mode:forwards;
 }
 
 @keyframes side-anime {
-    0% {
-        right: -260px;
-    }
-
-    100% {
-        right: 0px;
-    }
+	0%{
+		right: -260px;
+	}
+	100%{
+		right: 0px;
+	}
 }
 
-.SideText {
+.SideText{
     display: flex;
     line-height: 0px;
     margin-left: 5%;
 }
 
-.SideValue {
+.SideValue{
     margin: auto;
     width: 30%;
 }

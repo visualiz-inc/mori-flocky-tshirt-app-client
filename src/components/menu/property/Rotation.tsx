@@ -3,28 +3,28 @@ import { Common } from './common';
 import '../side.css';
 import { GlobalContext } from "../../providers/GlobalProvider";
 
-export const Rotation = (props:{obj:any,index:number[],Value:number}) => {
-  const GlbalValue: {Canvas?:Object,SideProperty?:any} = useContext(GlobalContext);
-  const SideProperty :{ Property?:any } = GlbalValue.SideProperty;
+import { Shape,AllShape } from "../../../Types"
 
-  const [Value,SetValue] = useState(props.Value);
+export const Rotation = (props:{index:number,Value:number}) => {
+  const GlbalValue: {
+    Canvas?:{
+                Object: Shape[],
+                SetObject: React.Dispatch<React.SetStateAction<Shape[]>>
+            },
+    SideProperty?:{
+      Property:AllShape,
+      SetProperty:React.Dispatch<React.SetStateAction<Shape & {index:number} | null>>
+    },
+  } = useContext(GlobalContext);
+
+
+  const [Value,SetValue] = useState<number>(props.Value);
   useEffect(() => {
     Common('rotation', GlbalValue.Canvas, GlbalValue.SideProperty, Value, props.index);
-    
-    const RelativeX = SideProperty.Property['x'] - ( SideProperty.Property['x'] + SideProperty.Property['width'] / 2);
-    const RelativeY = SideProperty.Property['y'] - ( SideProperty.Property['y'] + SideProperty.Property['height'] / 2);
-    
-    const degree :number = Value * ( Math.PI / 180) ;
-    const PosX :number = SideProperty.Property['x'] + 100 * Math.cos( degree ) - 50 * Math.sin( degree ); //回転に伴うx座標移動
-    const PosY :number = SideProperty.Property['y'] + 100 * Math.sin( degree ) + 50 * Math.cos( degree ); //回転に伴うy座標移動
-    console.log(degree)
-
-    Common('x', GlbalValue.Canvas, GlbalValue.SideProperty, PosX, props.index);
-    Common('y', GlbalValue.Canvas, GlbalValue.SideProperty, PosY, props.index);
   },[Value]);
 
   const ChangeValue = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-      let Num = Number(e.target.value);
+      let Num: number = Number(e.target.value);
       if(Num > 360){
         Num -= 360;
       }else if(Num < 0){

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg style="fill: rgb(255,255,255);stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0;stroke-linejoin: miter; stroke-miterlimit: 4; fill-rule: nonzero;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="500" height="500" viewBox="0 0 500 500" xml:space="preserve">
+<desc>Created with Fabric.js 4.6.0</desc>
+<defs>
+</defs>
+<g transform="matrix(1.93 0.03 -0.04 2.35 250 115.03)" id="HfIVLgKp2u90w2XVzqwuI"  >
+<path vector-effect="non-scaling-stroke"  transform=" translate(0, 0)" d="M 0 -32.62712 C 18.01017 -32.62712 32.62712 -18.01017 32.62712 0 C 32.62712 18.01017 18.01017 32.62712 0 32.62712 C -18.01017 32.62712 -32.62712 18.01017 -32.62712 0 C -32.62712 -18.01017 -18.01017 -32.62712 0 -32.62712 z" stroke-linecap="round" />
+</g>
+<g transform="matrix(2.12 0 0 3.27 250 213.34)" id="LMxjxSHf_xoHCRjgEhY9x"  >
+<path  vector-effect="non-scaling-stroke"  transform=" translate(0, 0)" d="M -22.88136 -22.88136 L 22.881349999999998 -22.88136 L 22.881349999999998 22.881349999999998 L -22.88136 22.881349999999998 z" stroke-linecap="round" />
+</g>
+<g transform="matrix(-5.51 0 0 -0.44 250 402.61)" id="2Jl9bWjJd6K28Zo3gbbGU"  >
+<path vector-effect="non-scaling-stroke"  transform=" translate(0, 0)" d="M -38.55932 38.55932 C -38.55932 -4.032130000000002 -35.77578 -38.55932 -32.34212 -38.55932 L 32.34211 -38.55932 L 32.34211 -38.55932 C 35.77578 -38.55932 38.559309999999996 -4.032130000000002 38.559309999999996 38.55932 L 38.559309999999996 38.55932 z" stroke-linecap="round" />
+</g>
+<g transform="matrix(6.11 0 0 1.44 250 325.52)" id="8m2FEXJDEnoireRTw8lPf"  >
+<path vector-effect="non-scaling-stroke"  transform=" translate(0, 0)" d="M -38.55932 -14.54804 C -38.55932 -27.8091 -36.01538 -38.55932 -32.87726 -38.55932 L 32.87726 -38.55932 L 32.87726 -38.55932 C 36.01537 -38.55932 38.55932 -27.8091 38.55932 -14.54804 L 38.55932 14.54804 L 38.55932 14.54804 C 38.55932 27.8091 36.01538 38.55932 32.87726 38.55932 L -32.87726 38.55932 L -32.87726 38.55932 C -36.01537 38.55932 -38.55932 27.8091 -38.55932 14.54804 z" stroke-linecap="round" />
+</g>
+</svg>

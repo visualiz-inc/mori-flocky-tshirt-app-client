@@ -3,10 +3,21 @@ import '../side.css';
 import { Common } from './common';
 import { GlobalContext } from "../../providers/GlobalProvider";
 
-export const CornerRadius = (props:{obj:any,index:number[],Value:number}) => {
-  const GlbalValue: {Canvas?:Object,SideProperty?:Object} = useContext(GlobalContext);
+import { AllShape,Shape } from "../../../Types"
 
-  const [Value,SetValue] = useState(props.Value);
+export const CornerRadius = (props:{index:number,Value:number}) => {
+  const GlbalValue: {
+    Canvas?:{
+                Object: Shape[],
+                SetObject: React.Dispatch<React.SetStateAction<Shape[]>>
+            },
+    SideProperty?:{
+      Property: AllShape,
+      SetProperty:React.Dispatch<React.SetStateAction<Shape & {index:number} | null>>
+        },
+  } = useContext(GlobalContext);
+
+  const [Value,SetValue] = useState<number>(props.Value);
   useEffect(() => {
     Common('cornerRadius', GlbalValue.Canvas, GlbalValue.SideProperty, Value, props.index);
   },[Value]);

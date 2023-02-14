@@ -3,10 +3,21 @@ import '../side.css';
 import { Common } from './common';
 import { GlobalContext } from "../../providers/GlobalProvider";
 
-export const Fill = (props:{obj:any,index:number[],Value:string}) => {
-  const GlbalValue: {Canvas?:Object,SideProperty?:Object} = useContext(GlobalContext);
+import { AllShape,Shape } from "../../../Types"
 
-  const [Value,SetValue] = useState(props.Value);
+export const Fill = (props:{index:number,Value:string}) => {
+  const GlbalValue: {
+    Canvas?:{
+                Object: Shape[],
+                SetObject: React.Dispatch<React.SetStateAction<Shape[]>>
+            },
+    SideProperty?:{
+      Property: AllShape,
+      SetProperty:React.Dispatch<React.SetStateAction<Shape & {index:number} | null>>
+        },
+  } = useContext(GlobalContext);
+
+  const [Value,SetValue] = useState<string>(props.Value);
   useEffect(() => {
     Common('fill', GlbalValue.Canvas, GlbalValue.SideProperty, Value, props.index);
   },[Value]);

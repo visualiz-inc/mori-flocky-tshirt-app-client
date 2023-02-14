@@ -1,0 +1,50 @@
+#sidebar {
+    margin-top: 15px;
+    margin-right: 5vw;
+}
+
+#icons {
+    user-select: none;
+    width: 30vw;
+    min-width: 270px;
+    text-align: center;
+}
+
+#icons button {
+    margin-top: 10px;
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+    color: rgb(255, 255, 255);
+    height: 40px;
+}
+#icons button * {
+    pointer-events: none;
+}
+
+#icons button img {
+    width: 25px;
+}
+
+#menu {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(35, 35, 35);
+    
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+
+    width: 30vw;
+    max-width: 400px;
+    min-width: 270px;
+    height: 60vh;;
+    overflow-y: scroll;
+}
+
+#menu::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+#menu::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+}
