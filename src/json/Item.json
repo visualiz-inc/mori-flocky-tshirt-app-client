@@ -1,7 +1,7 @@
 {
     "Item": [
         {
-            "ItemType": ["ShortSleeve","DrySports"],
+            "ItemType": ["T-shirt","ShortSleeve","DrySports"],
 
             "ImageSrc": "T-shirt/00300-ACT",
             "Name": "00300-ACT｜4.4オンス ドライTシャツ【全50色】glimmer",
@@ -38,7 +38,7 @@
         {
             "ItemType": ["Mask"],
 
-            "ImageSrc": "Mask/mask_print",
+            "ImageSrc": "Mask/mask",
             "Name": "マスク [モリフロッキーオリジナル]",
             "Money": "¥200（税別）",
             "CatchPhrase": "オリジナルマスクを作るのは簡単！",

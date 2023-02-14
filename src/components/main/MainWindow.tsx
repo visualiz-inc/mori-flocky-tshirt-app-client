@@ -16,7 +16,7 @@ export const MainWindow = () => {
             {GlobalValue.State?.MainWindowProperty == 'Canvas' && (
                 <TShirt />
             )}
-            {GlobalValue.State?.MainWindowProperty == 'Select' && (
+            {GlobalValue.State?.MainWindowProperty == 'ItemSelect' && (
                 <ItemSelect />
             )}
         </>

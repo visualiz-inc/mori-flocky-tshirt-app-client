@@ -1,0 +1,22 @@
+#selectWindow{
+  margin-top: 15px;
+  height: 80vh;
+  overflow-y: scroll;
+}
+#selectWindow::-webkit-scrollbar {
+  width: 10px;
+}
+#selectWindow::-webkit-scrollbar-thumb {
+  background-color: #40ff66;
+}
+
+.ImageSelectButton{
+  max-width: 150px;
+  min-width: 150px;
+}
+.ImageSelectButton img{
+  width: 100%;
+  height: 175px;
+  user-select: none;
+  pointer-events: none;
+}

@@ -10,7 +10,7 @@ import ColorLensIcon from '@mui/icons-material/ColorLens';
 
 
 import { DefaultWindow } from './menu/Default';
-import { ItemWindow } from './menu/Item';
+import { ItemWindow } from './menu/Item/Home';
 import { TextWindow } from './menu/Config';
 import { ImageWindow } from './menu/Image';
 import { StampWindow } from './menu/Stamp';

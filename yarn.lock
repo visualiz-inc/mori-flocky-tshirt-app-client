@@ -1197,7 +1197,7 @@ react-is@^18.0.0, react-is@^18.2.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-konva@^18.2.3:
+react-konva@^18.2.4:
   version "18.2.4"
   resolved "https://registry.yarnpkg.com/react-konva/-/react-konva-18.2.4.tgz#f5f63d07bb287d3edf7eee35612282ddc55a6d6f"
   integrity sha512-cVo0+L8PjUSrSAMLlutwRiI1t8koU4Z6EOsbrWxuXvTwNXG3qd0wFoNBBVGjOQgZX9hqufbK7NEQdfqlKve9jQ==

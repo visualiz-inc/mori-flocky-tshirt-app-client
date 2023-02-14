@@ -5,27 +5,31 @@ import { GlobalContext } from "../../providers/GlobalProvider";
 import { CanvasMain } from './CanvasMain';
 
 async function ImageT(color: string) {
-  const src:string = `../../../img/Items/${color}.png`;
-  return await import(src);
+  const src: string = `../../../img/Items/${color}.png`;
+  return await import(/* @vite-ignore */src);
 }
 
 export const TShirt = () => {
-  const GlobalValue: { 
-    CanvasProperty?: Prop ,
-    State?: { 
+  const GlobalValue: {
+    CanvasProperty?: Prop,
+    State?: {
       Color?: string,
-      Item?:TshirtType,
+      Item?: TshirtType,
     }
   } = useContext(GlobalContext);
   const { Width, Height, Border } = GlobalValue.CanvasProperty!;
 
-  const [ImgSrc,setImgSrc] = useState<string>()
-  if(GlobalValue.State!= undefined && GlobalValue.State.Item != undefined){
-  ImageT(GlobalValue.State.Item.ImageSrc).then(function (value) {
-    setImgSrc(value.default)
-  })
-  
-}
+  const [ImgSrc, setImgSrc] = useState<string>()
+  if (GlobalValue.State != undefined && GlobalValue.State.Item != undefined) {
+    ImageT(GlobalValue.State.Item.ImageSrc)
+      .then(function (value) {
+        setImgSrc(value.default)
+      })
+      .catch(function(error){
+        console.log(error)
+      })
+
+  }
 
 
 

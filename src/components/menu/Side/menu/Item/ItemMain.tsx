@@ -1,10 +1,10 @@
 import SquareIcon from '@mui/icons-material/Square';
-import { Box, Button, SxProps, Theme, Tooltip } from '@mui/material';
+import { Box, Button, SxProps, Theme} from '@mui/material';
 import { useContext, useState } from 'react';
-import { TshirtType } from '../../../../Types';
-import { GlobalContext } from '../../../providers/GlobalProvider';
+import { TshirtType } from '../../../../../Types';
+import { GlobalContext } from '../../../../providers/GlobalProvider';
 
-import './.menu.css';
+import '../.menu.css';
 
 function ColorSearch(color: string) {
     if (color == 'ホワイト') {
@@ -19,16 +19,22 @@ function ColorSearch(color: string) {
         return 'rgb(0,128,0)'
     } else if (color == 'ピンク') {
         return 'rgb(255,192,203)'
+    } else if (color == 'ブラック') {
+        return 'rgb(0,0,0)'
+    } else if (color == 'グレー'){
+        return 'rgb(121,121,121)'
     }
 }
 
 
-export const ItemWindow = () => {
+export const ItemMain = () => {
     const GlobalValue: {
         State?: {
             Color: string,
             SetColor: React.Dispatch<React.SetStateAction<string>>,
             Item: TshirtType,
+            MainWindowProperty:string,
+            SetMainWindowProperty :React.Dispatch<React.SetStateAction<string>>
         }
     } = useContext(GlobalContext);
 
@@ -42,20 +48,21 @@ export const ItemWindow = () => {
     const [ColorIndex, SetColorIndex] = useState<number>(0);
     const ColorClick = (e: React.MouseEvent<HTMLElement>) => {
         const ClickElement: EventTarget = e.target;
-        if (ClickElement instanceof Element) {
+        if (ClickElement instanceof Element && GlobalValue.State) {
             const ColorIndex: number = Number(ClickElement.id.slice(-1));
             SetColorIndex(ColorIndex);
-        };
+            GlobalValue.State.SetColor(GlobalValue.State.Item.Color[ColorIndex]);
+        }else {
+            console.error("src/components/menu/item");
+        }
     }
 
-    const ChangeClick = (e: React.MouseEvent<HTMLElement>) => {
-        const ClickElement: EventTarget = e.target;
-        if (ClickElement instanceof Element) {
+    const ChangeClick = () => {
             if (GlobalValue.State) {
-                GlobalValue.State.SetColor(GlobalValue.State.Item.Color[ColorIndex]);
+                GlobalValue.State.SetMainWindowProperty('ItemSelect');
             }
         };
-    }
+    
 
 
     if (GlobalValue.State != undefined) {
@@ -95,9 +102,11 @@ export const ItemWindow = () => {
                 <p>サイズ<br />
                 {GlobalValue.State.Item.Size.join('/')}
                 </p>
-                <p>生地の厚み<br />
+                {GlobalValue.State.Item.Thickness && (
+                     <p>生地の厚み<br />
                     ({GlobalValue.State.Item.Thickness}oz)
                 </p>
+                )}
                 <p>
                     アイテム料⾦ : ￥0000（税込0000）<br />
                     プリント料⾦ : 表⾯￥0000（税込￥0000）裏⾯￥0000
