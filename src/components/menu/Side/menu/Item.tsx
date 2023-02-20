@@ -1,5 +1,5 @@
 import SquareIcon from '@mui/icons-material/Square';
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, SxProps, Theme, Tooltip } from '@mui/material';
+import { Box, Button, SxProps, Theme } from '@mui/material';
 import { useContext, useState } from 'react';
 import { TshirtType } from '../../../../Types';
 import { GlobalContext } from '../../../providers/GlobalProvider';

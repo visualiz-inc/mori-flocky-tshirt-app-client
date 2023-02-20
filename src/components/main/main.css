@@ -2,12 +2,13 @@
   margin-top: 15px;
   height: 80vh;
   overflow-y: scroll;
+  display: block;
 }
 #selectWindow::-webkit-scrollbar {
   width: 10px;
 }
 #selectWindow::-webkit-scrollbar-thumb {
-  background-color: #40ff66;
+  background-color: #ababab;
 }
 
 .ImageSelectButton{

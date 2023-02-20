@@ -56,3 +56,21 @@
     min-width: 65%;
     min-height: 65px;
 }
+#itemSelectBox{
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: center;
+}
+#itemSelectBox h1{
+    line-height: 0px;
+    font-size: 20px;
+}
+#itemSelectBox button {
+    color: rgb(255, 255, 255);
+    margin-top: 10px;
+    margin-left: 10px;
+}
+#itemSelectBox button p {
+    line-height: 0px;
+    pointer-events: none;
+}

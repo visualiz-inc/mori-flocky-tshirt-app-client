@@ -56,15 +56,7 @@ export const ItemMain = () => {
             console.error("src/components/menu/item");
         }
     }
-
-    const ChangeClick = () => {
-            if (GlobalValue.State) {
-                GlobalValue.State.SetMainWindowProperty('ItemSelect');
-            }
-        };
     
-
-
     if (GlobalValue.State != undefined) {
         return (
             <Box id='itemMenu'>
@@ -113,7 +105,8 @@ export const ItemMain = () => {
                     （税込￥0000）/袖￥0000（税込0000）<br />
                     ※価格は全てプリント代込みの表⽰です。
                 </p>
-                <Button id='ItemChangeButton' onClick={ChangeClick!}>
+                <Button id='ItemChangeButton' 
+                onClick={() => GlobalValue.State!.SetMainWindowProperty('ItemSelect')}>
                     アイテムを変更する
                 </Button>
             </Box>

@@ -21,10 +21,11 @@ import { GlobalContext } from '../../providers/GlobalProvider';
 
 export const Sidebar = () => {
     const GlobalValue: {
-        State?:{
-            MainWindowProperty:string,
-        SetMainWindowProperty :React.Dispatch<React.SetStateAction<string>>
-    }} = useContext(GlobalContext);
+        State?: {
+            MainWindowProperty: string,
+            SetMainWindowProperty: React.Dispatch<React.SetStateAction<string>>
+        }
+    } = useContext(GlobalContext);
 
     const Icons: string[] = ['アイテム', 'コンフィグ', '写真', 'スタンプ', 'テンプレ'];
     const [Windows, SetWindow] = useState<boolean[]>([false, false, false, false, false]);
@@ -40,9 +41,8 @@ export const Sidebar = () => {
                     Dummy[i] = false;
                 }
             });
-            if(GlobalValue.State?.MainWindowProperty == 'Select'){
-                GlobalValue.State.SetMainWindowProperty('Canvas');
-            }
+            GlobalValue.State!.SetMainWindowProperty('Canvas');
+
             SetWindow(Dummy);
         }
     }
@@ -84,7 +84,7 @@ export const Sidebar = () => {
             </Box>
             <Box id='menu'>
                 {!Windows[0] && !Windows[1] && !Windows[2] && !Windows[3] && !Windows[4] && (
-                    <DefaultWindow window = {[Windows, SetWindow]} />
+                    <DefaultWindow window={[Windows, SetWindow]} />
                 )}
 
                 {Windows[0] && (

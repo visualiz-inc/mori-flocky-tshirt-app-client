@@ -12,6 +12,8 @@ import { MainWindow } from './components/main/MainWindow';
 export const App = () => {
   const GlobalValue: { State?: { Property: Shape } } = useContext(GlobalContext);
   if (GlobalValue.State) {
+
+    
     const Property = GlobalValue.State.Property;
     return (
       <>

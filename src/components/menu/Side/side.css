@@ -5,15 +5,15 @@
 
 #icons {
     user-select: none;
-    width: 30vw;
+    width: 35vw;
     min-width: 270px;
     text-align: center;
 }
 
 #icons button {
     margin-top: 10px;
-    margin-left: 0.5vw;
-    margin-right: 0.5vw;
+    margin-left: 0.25vw;
+    margin-right: 0.25vw;
     color: rgb(255, 255, 255);
     height: 40px;
 }
