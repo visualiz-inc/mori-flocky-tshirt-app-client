@@ -1,7 +1,8 @@
 import { useState, useContext, useMemo } from 'react';
 import { Stage, Layer } from 'react-konva';
 import Konva from 'konva';
-import { Prop, Shape } from '../../../Types'
+import { Prop, Shape, Svg, Rect, RegularPolygon, Circle, Text } from '../../../Types'
+
 import { CanvasDraw } from './CanvasDraw';
 
 import { GlobalContext } from "../../providers/GlobalProvider";
@@ -10,9 +11,9 @@ export const CanvasMain = () => {
 
 const GlobalValue: {
   State?: { 
-      Object?: Shape[]; 
-      SetObject?: React.Dispatch<React.SetStateAction<null | Shape[]>>,
-      SideProperty?: Object
+      Object: Shape[]; 
+      SetObject: React.Dispatch<React.SetStateAction<null | Shape[]>>,
+      SetProperty: React.Dispatch<React.SetStateAction<Rect | RegularPolygon | Circle | Text | Svg | null>>
     },
     CanvasProperty?: Prop
   } = useContext(GlobalContext);  //グローバル変数を読み込み
@@ -28,6 +29,7 @@ const GlobalValue: {
     const Elem = document.getElementsByClassName('Side')[0];
     if (ClickedOnEmpty) { //なければ実行
       SelectShape(null);  //selectShapeを初期値にする
+      GlobalValue.State!.SetProperty(null);
 
       if (Elem) {
         Elem.animate({

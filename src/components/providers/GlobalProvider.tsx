@@ -1,5 +1,5 @@
 import { createContext, useState, ReactNode } from "react";
-import { Prop, Svg, Rect, RegularPolygon, Circle, Text, AllShape, TshirtType, MaskType } from "../../Types"
+import { Prop, Svg, Rect, RegularPolygon, Circle, Text, TshirtType, MaskType } from "../../Types"
 
 import ObjectJsonData from '../../json/Object.json';
 import ItemJsonData from '../../json/Item.json';
@@ -25,8 +25,8 @@ export const GlobalProvider = (props: { children: ReactNode }) => {
 
   const Global = {
     CanvasProperty: {
-      Width: 300,
-      Height: 380,
+      Width: 250,
+      Height: 330,
       Border: '2px dashed #ffffff'
     } as Prop,
     ItemsData,

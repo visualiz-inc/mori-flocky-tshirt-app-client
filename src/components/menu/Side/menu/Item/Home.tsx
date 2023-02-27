@@ -24,7 +24,10 @@ export const ItemWindow = () => {
              GlobalValue.State!.MainWindowProperty == 'MaskSelect') && (
                 <ItemSelect />
             )}
-            {GlobalValue.State!.MainWindowProperty == 'T-shirtSelect' && (
+            {!(GlobalValue.State!.MainWindowProperty == 'Canvas' || 
+            GlobalValue.State!.MainWindowProperty == 'ItemSelect' || 
+            GlobalValue.State!.MainWindowProperty == 'MaskSelect')
+             && (
                 <TshirtSelect />
             )}
             </>

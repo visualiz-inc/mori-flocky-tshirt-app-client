@@ -17,9 +17,10 @@ export const DefaultWindow = (props: {
         background: 'rgb(45, 45, 45)',
         borderRadius: '10px',
         padding: '12px',
-        marginLeft: '-10px',
+        marginLeft: '0px',
         pointerEvents: 'none'
     }
+
     const ButtonStyle: SxProps<Theme> = {
         "&:hover": {
             background: "rgb(173, 173, 173)"
@@ -54,23 +55,19 @@ export const DefaultWindow = (props: {
                     return (
                         <Button key = {`Default${i}`} sx={ButtonStyle} onClick={onClick!}>
                             {text == 'アイテムの確認・変更' && (
-                                <CheckroomIcon fontSize="large"
-                                    sx={IconStyle} />
+                                <CheckroomIcon sx={IconStyle} />
                             )}
                             {text == 'オブジェクトの設定' && (
-                                <BuildIcon fontSize="large"
-                                    sx={IconStyle} />
+                                <BuildIcon sx={IconStyle} />
                             )}
                             {text == '画像のアップロード' && (
-                                <InsertPhotoIcon fontSize="large"
-                                    sx={IconStyle} />
+                                <InsertPhotoIcon sx={IconStyle} />
                             )}
                             {text == 'スタンプを選ぶ' && (
-                                <img src={StampIcon} />
+                                <img src={StampIcon} style={IconStyle as React.CSSProperties} />
                             )}
                             {text == 'デザインテンプレート' && (
-                                <ColorLensIcon fontSize="large"
-                                    sx={IconStyle} />
+                                <ColorLensIcon sx={IconStyle} />
                             )}
                             <p>{text}</p>
                         </Button>

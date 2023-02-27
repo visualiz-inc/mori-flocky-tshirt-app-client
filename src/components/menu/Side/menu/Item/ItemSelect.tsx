@@ -1,8 +1,8 @@
-import { Button, SxProps, Theme } from '@mui/material';
+import { Box, Button, SxProps, Theme } from '@mui/material';
 import { useContext } from 'react';
-import { GlobalContext } from '../../../../providers/GlobalProvider';
+import { GlobalContext } from '../../../../providers/GlobalProvider'
 
-import CheckroomIcon from '@mui/icons-material/Checkroom';
+import TshirtIcon from '../../../../../img/ItemIcon/TshirtIcon.svg'
 import MasksIcon from '@mui/icons-material/Masks';
 
 import '../.menu.css';
@@ -15,15 +15,9 @@ export const ItemSelect = () => {
         }
     } = useContext(GlobalContext);
 
-    const IconStyle: SxProps<Theme> = {
-        borderRadius: '10px',
-        padding: '12px',
-        pointerEvents: 'none'
-        
-    }
     const ButtonStyle: SxProps<Theme> = {
         display:'block',
-        width:'100px',
+        width:'110px',
         background: 'rgb(45, 45, 45)',
         "&:hover": {
             background: "rgb(200, 77, 150)"
@@ -31,7 +25,7 @@ export const ItemSelect = () => {
     }
     const SelectButtonStyle: SxProps<Theme> = {
         display:'block',
-        width:'100px',
+        width:'110px',
         background: "rgb(200, 77, 150)",
         "&:hover": {
             background: "rgb(200, 77, 150)"
@@ -39,22 +33,22 @@ export const ItemSelect = () => {
     }
 
     return (
-        <div id='itemSelectBox'>
-            <h1>アイテムを選んでください</h1>
+        <>
+        <h1 id = 'itemSelctH1'>アイテムを選んでください</h1>
+        <Box id='itemSelectBox'>
             <Button sx={ButtonStyle} 
                 onClick={() => GlobalValue.State!.SetMainWindowProperty('T-shirtSelect')}>
-                <CheckroomIcon fontSize="large"
-                    sx={IconStyle} />
+                <img src={TshirtIcon} />
                 <p>Tシャツ</p>
             </Button>
             <Button sx={
                 GlobalValue.State?.MainWindowProperty == 'MaskSelect' ? SelectButtonStyle : ButtonStyle } 
                 onClick={() => GlobalValue.State!.SetMainWindowProperty('MaskSelect')}>
-                <MasksIcon fontSize="large"
-                    sx={IconStyle} />
+                <MasksIcon fontSize="large"/>
                 <p>マスク</p>
             </Button>
             
-        </div>
+        </Box>
+        </>
     );
 };

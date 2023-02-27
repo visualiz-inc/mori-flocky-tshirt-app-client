@@ -10,7 +10,7 @@
 }
 #defaultMenu img {
     background: rgb(45, 45, 45);
-    width: 38px;
+    width: 26px;
     padding: 12px;
     margin-left: -10px;
     border-radius: 10px;
@@ -60,10 +60,7 @@
     display: flex;
     flex-wrap:wrap;
     justify-content: center;
-}
-#itemSelectBox h1{
-    line-height: 0px;
-    font-size: 20px;
+    text-align: center;
 }
 #itemSelectBox button {
     color: rgb(255, 255, 255);
@@ -71,6 +68,24 @@
     margin-left: 10px;
 }
 #itemSelectBox button p {
-    line-height: 0px;
+    line-height:1em;
     pointer-events: none;
+    margin-top: 0px;
+}
+#itemSelectBox button img {
+    border-radius: 10px;
+    width:30px;
+
+}
+#itemSelctH1{
+    text-align:center;
+    line-height: 0px;
+    margin-top: 1em;
+    font-size: 20px;
+}
+
+#PropertyMenu h1{
+    text-align: center;
+    font: bold 24px 'メイリオ';
+    line-height: 24px;
 }

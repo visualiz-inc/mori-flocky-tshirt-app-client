@@ -11,7 +11,7 @@ import ColorLensIcon from '@mui/icons-material/ColorLens';
 
 import { DefaultWindow } from './menu/Default';
 import { ItemWindow } from './menu/Item/Home';
-import { TextWindow } from './menu/Config';
+import { PropertyWindow } from './menu/Property/Home';
 import { ImageWindow } from './menu/Image';
 import { StampWindow } from './menu/Stamp';
 import { TemplateWindow } from './menu/Template';
@@ -27,7 +27,7 @@ export const Sidebar = () => {
         }
     } = useContext(GlobalContext);
 
-    const Icons: string[] = ['アイテム', 'コンフィグ', '写真', 'スタンプ', 'テンプレ'];
+    const Icons: string[] = ['アイテム', 'プロパティ', '写真', 'スタンプ', 'テンプレ'];
     const [Windows, SetWindow] = useState<boolean[]>([false, false, false, false, false]);
 
     const onClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -68,7 +68,7 @@ export const Sidebar = () => {
                                 }}>
                                 {obj == 'アイテム' &&
                                     <CheckroomIcon />
-                                }{obj == 'コンフィグ' &&
+                                }{obj == 'プロパティ' &&
                                     <BuildIcon />
                                 }{obj == '写真' &&
                                     <InsertPhotoIcon />
@@ -91,7 +91,7 @@ export const Sidebar = () => {
                     <ItemWindow />
                 )}
                 {Windows[1] && (
-                    <TextWindow />
+                    <PropertyWindow />
                 )}
                 {Windows[2] && (
                     <ImageWindow />
