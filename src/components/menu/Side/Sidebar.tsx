@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 
-import { Box, Button, Tooltip } from "@mui/material";
+import { Box, Button, SxProps, Theme, Tooltip } from "@mui/material";
 
 import CheckroomIcon from '@mui/icons-material/Checkroom';
 import BuildIcon from '@mui/icons-material/Build';
@@ -11,7 +11,7 @@ import ColorLensIcon from '@mui/icons-material/ColorLens';
 
 import { DefaultWindow } from './menu/Default';
 import { ItemWindow } from './menu/Item/Home';
-import { PropertyWindow } from './menu/Property/Home';
+import { PropertyWindow } from './menu/Property/Common/Common';
 import { ImageWindow } from './menu/Image';
 import { StampWindow } from './menu/Stamp';
 import { TemplateWindow } from './menu/Template';
@@ -59,23 +59,25 @@ export const Sidebar = () => {
                         >
                             <Button onClick={onClick!}
                                 sx={{
+                                    maxHeight:'30px',
+                                    minWidth:'45px',
                                     background: Windows[i] ? "rgb(200, 77, 150)" : "rgb(45, 45, 45)",
                                     "&:hover": Windows[i] ? {
                                         background: "rgb(200, 77, 150)"
                                     } : {
                                         background: "rgb(182, 182, 182)"
-                                    },
+                                    }
                                 }}>
                                 {obj == 'アイテム' &&
-                                    <CheckroomIcon />
+                                    <CheckroomIcon fontSize='small' />
                                 }{obj == 'プロパティ' &&
-                                    <BuildIcon />
+                                    <BuildIcon fontSize='small'  />
                                 }{obj == '写真' &&
-                                    <InsertPhotoIcon />
+                                    <InsertPhotoIcon fontSize='small'  />
                                 }{obj == 'スタンプ' &&
                                     <img src={StampIcon} />
                                 }{obj == 'テンプレ' &&
-                                    <ColorLensIcon />
+                                    <ColorLensIcon fontSize='small'  />
                                 }
                             </Button>
                         </Tooltip>

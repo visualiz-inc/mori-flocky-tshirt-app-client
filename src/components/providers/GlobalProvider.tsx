@@ -1,5 +1,5 @@
 import { createContext, useState, ReactNode } from "react";
-import { Prop, Svg, Rect, RegularPolygon, Circle, Text, TshirtType, MaskType } from "../../Types"
+import { Prop, Svg, Rect, RegularPolygon, Circle, Text, AllShape, TshirtType, MaskType } from "../../Types"
 
 import ObjectJsonData from '../../json/Object.json';
 import ItemJsonData from '../../json/Item.json';
@@ -10,10 +10,10 @@ export const GlobalProvider = (props: { children: ReactNode }) => {
   const { children } = props;
 
 
-  const [Object, SetObject] = useState<(Rect | RegularPolygon | Circle | Text | Svg)[]>(ObjectJsonData["Object"]);
+  const [Object, SetObject] = useState<AllShape[]>(ObjectJsonData["Object"]);
 
   const [Property, SetProperty] =
-    useState<Rect | RegularPolygon | Circle | Text | Svg | null>(null);
+    useState<AllShape | null>(null);
 
   const [Color, SetColor] =
     useState<string>('ホワイト'); //アイテムの色設定
@@ -25,8 +25,8 @@ export const GlobalProvider = (props: { children: ReactNode }) => {
 
   const Global = {
     CanvasProperty: {
-      Width: 250,
-      Height: 330,
+      Width: 220,
+      Height: 300,
       Border: '2px dashed #ffffff'
     } as Prop,
     ItemsData,

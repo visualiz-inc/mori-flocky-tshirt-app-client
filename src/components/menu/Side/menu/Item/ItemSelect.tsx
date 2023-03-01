@@ -2,7 +2,7 @@ import { Box, Button, SxProps, Theme } from '@mui/material';
 import { useContext } from 'react';
 import { GlobalContext } from '../../../../providers/GlobalProvider'
 
-import TshirtIcon from '../../../../../img/ItemIcon/TshirtIcon.svg'
+import TshirtIcon from '../../../../../img/SideIcon/ItemIcon/TshirtIcon.svg'
 import MasksIcon from '@mui/icons-material/Masks';
 
 import '../.menu.css';

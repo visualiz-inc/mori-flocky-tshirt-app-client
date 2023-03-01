@@ -3,11 +3,11 @@ import { Box, Button, SxProps } from '@mui/material';
 import { useContext } from 'react';
 import { GlobalContext } from '../../../../providers/GlobalProvider'
 
-import TshirtIcon from '../../../../../img/ItemIcon/TshirtIcon.svg'
-import NosleeveIcon from '../../../../../img/ItemIcon/NosleeveIcon.svg'
-import KadiesKidsIcon from '../../../../../img/ItemIcon/NosleeveIcon.svg'
-import DrySportsIcon from '../../../../../img/ItemIcon/DrySportsIcon.svg'
-import LongSleeveIcon from '../../../../../img/ItemIcon/LongSleeveIcon.svg'
+import TshirtIcon from '../../../../../img/SideIcon/ItemIcon/TshirtIcon.svg'
+import NosleeveIcon from '../../../../../img/SideIcon/ItemIcon/NosleeveIcon.svg'
+import LadiesKidsIcon from '../../../../../img/SideIcon/ItemIcon/LadiesKidsIcon.svg'
+import DrySportsIcon from '../../../../../img/SideIcon/ItemIcon/DrySportsIcon.svg'
+import LongSleeveIcon from '../../../../../img/SideIcon/ItemIcon/LongSleeveIcon.svg'
 import '../.menu.css';
 
 export const TshirtSelect = () => {
@@ -54,7 +54,7 @@ export const TshirtSelect = () => {
             <Button sx={
                 GlobalValue.State?.MainWindowProperty == 'LadiesKidsSelect' ? SelectButtonStyle : ButtonStyle } 
                 onClick={() => GlobalValue.State!.SetMainWindowProperty('LadiesKidsSelect')}>
-                <img src={KadiesKidsIcon} />
+                <img src={LadiesKidsIcon} />
                 <p>レディースキッズ</p>
             </Button>
             <Button sx={

@@ -84,8 +84,38 @@
     font-size: 20px;
 }
 
-#PropertyMenu h1{
+#PropertyMenu{
+    position: relative;
+    display: block;
     text-align: center;
-    font: bold 24px 'メイリオ';
-    line-height: 24px;
+    margin-top: 10px;
+    height: 100%;
+}
+#OthersButtonBox{
+    position: absolute;
+    border-top: 1px solid black;
+    width: 100%;
+    bottom: 10px;
+    text-align: center;
+}
+#OthersButton{
+    background-color: rgb(70, 70, 70);
+    color: aliceblue;
+    margin-top: 2%;
+}
+#SortLayerDiv{
+    display:flex;
+    margin-top:10px;
+}
+#SortLayerDiv button{
+    display: block;
+}
+#SortLayerDiv button img{
+    width: 50px;
+}
+#SortLayerDiv button p{
+    margin-top: -5px;
+    line-height: 0px;
+    color: rgb(45, 45, 45);
+    font-weight: bold;
 }

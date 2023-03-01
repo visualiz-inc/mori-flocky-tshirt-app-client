@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useContext } from "react";
 import { Rect, Circle, RegularPolygon, Text, Transformer } from 'react-konva';
 import { GlobalContext } from "../../providers/GlobalProvider";
 
-import { Shape } from '../../../Types'
+import { AllShape, Shape } from '../../../Types'
 import { KonvaEventObject } from "konva/lib/Node";
 import Konva from "konva";
 
@@ -15,11 +15,12 @@ export const CanvasDraw = (props: {
 }) => {
     const GlobalValue: {
         State?: {
-            SetProperty: React.Dispatch<React.SetStateAction<Shape & { index: number } | null>>
+            SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
         }
     } = useContext(GlobalContext);
     const shapeRef: React.MutableRefObject<null> = useRef(null);  //useRef currentプロパティに値を保持する
     const trRef = useRef<Konva.Transformer>(null);
+
 
     const DrawProperty = {
         ...props.shapeProps,    //図形のスタイル等
@@ -48,21 +49,8 @@ export const CanvasDraw = (props: {
 
     function UpdateProperty() {
         GlobalValue.State!.SetProperty({
-            ...NodeProperty(),
+            ...NodeProperty() as AllShape,
         });
-
-        const elem: HTMLDivElement = document.querySelector('div.Side')!;
-        if (elem) {
-            document.getElementsByClassName('Side')[0].animate({
-                right: '0px',
-            }, {
-                duration: 500,
-                fill: 'forwards',
-                easing: 'ease-in'
-            });
-        }
-
-
     }
 
     function NodeProperty() {   //nodeメソッドの場合直代入 返り値はSideへ
@@ -97,7 +85,8 @@ export const CanvasDraw = (props: {
             {props.shapeProps.type == 'RegularPolygon' && (
                 <RegularPolygon sides={0} radius={0} {...DrawProperty} />
             )}
-            {props.shapeProps.type == 'Text' && (
+            {
+            props.shapeProps.type == 'Text' && (
                 <Text {...DrawProperty} />
             )}
 

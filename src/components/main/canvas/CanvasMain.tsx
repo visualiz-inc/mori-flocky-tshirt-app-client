@@ -1,7 +1,7 @@
 import { useState, useContext, useMemo } from 'react';
 import { Stage, Layer } from 'react-konva';
 import Konva from 'konva';
-import { Prop, Shape, Svg, Rect, RegularPolygon, Circle, Text } from '../../../Types'
+import { Prop, Shape, AllShape } from '../../../Types'
 
 import { CanvasDraw } from './CanvasDraw';
 
@@ -11,9 +11,9 @@ export const CanvasMain = () => {
 
 const GlobalValue: {
   State?: { 
-      Object: Shape[]; 
+      Object: AllShape[]; 
       SetObject: React.Dispatch<React.SetStateAction<null | Shape[]>>,
-      SetProperty: React.Dispatch<React.SetStateAction<Rect | RegularPolygon | Circle | Text | Svg | null>>
+      SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
     },
     CanvasProperty?: Prop
   } = useContext(GlobalContext);  //グローバル変数を読み込み
@@ -49,8 +49,7 @@ const GlobalValue: {
     return [Width, Height]
   }, [GlobalValue.CanvasProperty]);
 
-  if (GlobalValue.State && GlobalValue.State.Object) {
-    let ShapeObjects:Shape[] = GlobalValue.State.Object.sort(function(SortA, SortB) {
+    const ShapeObjects:AllShape[] = GlobalValue.State!.Object.sort(function(SortA, SortB) {
       return (SortA.zindex > SortB.zindex) ? -1 : 1;
     });
     return (
@@ -68,7 +67,7 @@ const GlobalValue: {
             if (obj != null) {
               return (
                 <CanvasDraw
-                  key={i} //えらー回避
+                  key={`obj${i}`} //えらー回避
                   index={i}
                   shapeProps={obj} //描画する図形のデータ受け渡し
                   isSelected={obj.id === selectedId} //selectedIDがrect.idイコールのときtrueを渡す
@@ -89,17 +88,10 @@ const GlobalValue: {
                   }}
                 />
               );
-            }else { 
-              <p>NULL</p>
             }
           })}
         </Layer>
       </Stage>
 
     )
-  }else { 
-    return (
-    <p>NULL</p>
-    )
-  }
 };

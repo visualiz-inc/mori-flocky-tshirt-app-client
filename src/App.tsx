@@ -3,7 +3,6 @@ import { GlobalContext } from './components/providers/GlobalProvider';
 import { Shape } from "./Types"
 
 import { Header } from './components/menu/Head/Header';
-import { Side } from './components/menu/Sidemenu';
 import { Sidebar } from './components/menu/Side/Sidebar';
 import { MainWindow } from './components/main/MainWindow';
 
@@ -28,7 +27,6 @@ export const App = () => {
           <MainWindow />
 
         </div>
-        {Property && <Side />}
         </div>
       </>
       

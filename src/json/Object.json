@@ -17,7 +17,8 @@
             "zindex": 1,
             "id": "object0",
             "offsetX": 25,
-            "offsetY": 25
+            "offsetY": 25,
+            "index": 0
         },
         {
             "type": "RegularPolygon",
@@ -33,7 +34,8 @@
             "strokeWidth": 0,
             "stroke": "#000000",
             "zindex": 2,
-            "id": "object1"
+            "id": "object1",
+            "index": 1
         },
         {
             "type": "Circle",
@@ -47,17 +49,19 @@
             "opacity": 1,
             "strokeWidth": 0,
             "stroke": "#000000",
-            "zindex": 5,
-            "id": "object2"
+            "zindex": 4,
+            "id": "object2",
+            "index": 2
         },
         {
             "type": "Text",
             "x": 40,
             "y": 10,
             "width": 170,
-            "height":30,
-            "text": "Hello World",
+            "height": 60,
+            "text": "Hello\nWorld",
             "fontFamily": "メイリオ",
+            "align":"left",
             "fontSize": 30,
             "fontStyle": "",
             "scaleX": 1,
@@ -69,17 +73,19 @@
             "strokeWidth": 0,
             "stroke": "#000000",
             "zindex": 0,
-            "id": "object3"
+            "id": "object3",
+            "index": 3
         },
         {
             "type": "Text",
             "x": 120,
             "y": 200,
             "width": 80,
-            "height":30,
+            "height": 30,
             "text": "Hello",
+            "align":"center",
             "fontFamily": "メイリオ",
-            "fontSize": 30,
+            "fontSize": 50,
             "fontStyle": "",
             "scaleX": 1,
             "scaleY": 1,
@@ -89,8 +95,9 @@
             "cornerRadius": 0,
             "strokeWidth": 0,
             "stroke": "#000000",
-            "zindex": 0,
-            "id": "object4"
+            "zindex": 3,
+            "id": "object4",
+            "index": 4
         }
     ]
 }

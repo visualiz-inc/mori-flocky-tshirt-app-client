@@ -1,28 +1,28 @@
-import { Shape, AllShape } from "../../../Types"
+import { useContext } from "react";
+import { AllShape, Rect, RegularPolygon, Circle, Svg } from "../../../Types"
+import { GlobalContext } from "../../providers/GlobalProvider";
 
 export function Common(
-    type: string, 
-    Canvas?: {
-        Object: Shape[],
-        SetObject: React.Dispatch<React.SetStateAction<Shape[]>>
-    },
-    SideProperty?: {
-        Property: AllShape,
-        SetProperty: React.Dispatch<React.SetStateAction<Shape & {index:number} | null>>,
-    },
-    Value?: number | string,
-    index?: number) {
-    if (index != undefined && Canvas && SideProperty) {
-        interface CommonInterface extends Shape {
-            [key: string]: number|string|unknown    //ブランケット記法で参照した際の返り値を定義
+    type: string,
+    Value: number | string,
+    index: number) {
+    const GlobalValue: {
+        State?: {
+            Object: (Rect | RegularPolygon | Circle | Text | Svg)[],
+            SetObject: React.Dispatch<React.SetStateAction<(Rect | RegularPolygon | Circle | Text | Svg)[]>>,
+            SetProperty: React.Dispatch<React.SetStateAction<(Rect | RegularPolygon | Circle | Text | Svg) | null>>
         }
-        let CanvasObject = Canvas.Object as CommonInterface[];
-        CanvasObject[index][type] = Value;
-        Canvas.SetObject(CanvasObject);   //オブジェクトを代入 
-        SideProperty.SetProperty({         //サイドバーに代入
-            ...CanvasObject[index],
-            'width': SideProperty.Property['width'],
-            'height': SideProperty.Property['height'],
+    } = useContext(GlobalContext);
+
+    if (index != undefined && GlobalValue.State){
+        interface CommonInterface extends AllShape {
+            [key: string]: number | string | unknown    //ブランケット記法で参照した際の返り値を定義
+        }
+        let TempObject = GlobalValue.State.Object as CommonInterface[];
+        TempObject[index][type] = Value;
+        GlobalValue.State.SetObject(TempObject);   //オブジェクトを代入 
+        GlobalValue.State.SetProperty({         //サイドバーに代入
+            ...TempObject[index],
             'index': index
         });
     }

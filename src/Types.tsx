@@ -21,6 +21,7 @@ export type Shape = {
     opacity: number,
     strokeWidth: number,
     stroke: Color,
+    index: number,
     zindex: number, // 階層の深さ
     id: string,
 }
@@ -37,6 +38,7 @@ export type Text = Shape & {
     text: string,
     fontFamily: string,
     fontSize: number,
+    align:string,
     fontStyle: "",
 }
 
@@ -53,17 +55,7 @@ export type Svg = Shape & {
     src: string
 }
 
-export type AllShape = Shape & {
-    text: string,
-    fontFamily: string,
-    fontSize: number,
-    fontStyle: "",
-    sides: number,
-    radius: number,
-    src: string,
-    index: number,
-    zindex: number
-}
+export type AllShape = Rect | Text | RegularPolygon | Circle | Svg;
 export type ItemType = {
     ItemType: string[],
     ImageSrc:string,
