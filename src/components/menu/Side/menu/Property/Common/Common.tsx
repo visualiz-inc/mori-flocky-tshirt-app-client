@@ -8,13 +8,13 @@ import '../../.menu.css';
 import { Box, Button } from "@mui/material";
 
 import { TextProperty } from './Text';
-import { Others } from '../Others/Others'
+import { Sort } from "./Sort";
 
 export const PropertyWindow = () => {
     const GlobalValue: {
         State?: {
-            Object: AllShape[],
-            SetObject: React.Dispatch<React.SetStateAction<AllShape[]>>,
+            Object: AllShape[][],
+            SetObject: React.Dispatch<React.SetStateAction<AllShape[][]>>,
             Property: AllShape,
             SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
         }
@@ -25,8 +25,9 @@ export const PropertyWindow = () => {
         changeValue: {},
         ref: AllPropertyShapeType,
         State: {
-            Object: AllShape[],
-            SetObject: React.Dispatch<React.SetStateAction<AllShape[]>>,
+            Object: AllShape[][],
+            ObjectInside: number,
+            SetObject: React.Dispatch<React.SetStateAction<AllShape[][]>>,
             SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
         }) => {
         const newProperty = {
@@ -35,8 +36,10 @@ export const PropertyWindow = () => {
         }
 
         if (ref) {
-            State.SetObject(State.Object.map((obj, index) =>
+            let Object :AllShape[][] = State.Object;
+            Object[State.ObjectInside] = (State.Object[State.ObjectInside].map((obj, index) =>
                 (index == ref.index ? newProperty : obj)));      //Object代入
+            State.SetObject(Object);
         }
         State.SetProperty(newProperty);
     };
@@ -45,42 +48,48 @@ export const PropertyWindow = () => {
         SetRefProperty(GlobalValue.State!.Property as AllPropertyShapeType);
     }, [GlobalValue.State!.Property]);
 
-    const [PropertyPage, SetPropertyPage] = useState<number>(0);
-
-    if (!RefProperty) {    //選択オブジェクトがない場合
+    const [OthersProperty, SetOthersProperty] = useState<number>(0);
+    const onClickOther = () => {    //その他ボタンクリック
+        if (OthersProperty == 0) {
+            SetOthersProperty(1)
+        } else if (OthersProperty == 1) {
+            SetOthersProperty(0)
+        }
+    }
+    if (!GlobalValue.State!.Property || !RefProperty) {    //選択オブジェクトがない場合
         return (
+
             <Box id='PropertyMenu'>
                 <p>オブジェクトを選択してください</p>
             </Box>
         )
     } else {
         const Keys = Object.keys(RefProperty);
-        if (PropertyPage == 0) {
-            return (
-                <>
+        return (
+            <>
                 <Box id='PropertyMenu'>
-                    {Keys.includes('text') && (
+                    {Keys!.includes('text') && (
                         <TextProperty onChange={ChangeProperty} Ref={RefProperty} />
                     )}
-                </Box>
-                <Box id='OthersButtonBox'>
-                        <Button 
+                    <Box id='OthersButtonBox'>
+                        <Button
                             id='OthersButton'
-                            onClick={() => SetPropertyPage(1)}
-                        >その他の設定</Button>
+                            onClick={onClickOther}
+                        >
+                            {OthersProperty == 0 && (
+                                <p>その他の設定</p>
+                            )}
+                            {OthersProperty == 1 && (
+                                <p>閉じる</p>
+                            )}
+                        </Button>
+                        {OthersProperty == 1 && (
+                            <Sort />
+                        )}
+                    </Box>
                 </Box>
-                </>
-            )
-        }else if(PropertyPage == 1) {
-            return (
-                <Box id='PropertyMenu'>
-                    <Others SetPropertyPage={SetPropertyPage}/>
-                </Box>
-            )
-        }else {
-            return (
-                <p>ERROR</p>
-            )
-        }
+
+            </>
+        )
     }
 };

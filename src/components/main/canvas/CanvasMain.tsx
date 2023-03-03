@@ -9,10 +9,11 @@ import { GlobalContext } from "../../providers/GlobalProvider";
 
 export const CanvasMain = () => {
 
-const GlobalValue: {
-  State?: { 
-      Object: AllShape[]; 
-      SetObject: React.Dispatch<React.SetStateAction<null | Shape[]>>,
+  const GlobalValue: {
+    State?: {
+      Object: AllShape[][];
+      SetObject: React.Dispatch<React.SetStateAction<AllShape[][]>>,
+      ObjectInside: number,
       SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
     },
     CanvasProperty?: Prop
@@ -26,20 +27,9 @@ const GlobalValue: {
   const checkDeselect = (e: Konva.KonvaEventObject<MouseEvent> | Konva.KonvaEventObject<TouchEvent>) => {
     // canvasクリックで実行
     const ClickedOnEmpty = e.target === e.target.getStage(); //クリック位置に図形があるか
-    const Elem = document.getElementsByClassName('Side')[0];
     if (ClickedOnEmpty) { //なければ実行
       SelectShape(null);  //selectShapeを初期値にする
       GlobalValue.State!.SetProperty(null);
-
-      if (Elem) {
-        Elem.animate({
-          right: '-260px',
-        }, {
-          duration: 200,
-          fill: 'forwards',
-          easing: 'ease-in'
-        });
-      }
     }
   };
 
@@ -48,50 +38,52 @@ const GlobalValue: {
     const Height = GlobalValue.CanvasProperty?.Height;
     return [Width, Height]
   }, [GlobalValue.CanvasProperty]);
+  const ShapeObjects: AllShape[] = GlobalValue.State!.Object[GlobalValue.State!.ObjectInside].sort(function (SortA, SortB) {
 
-    const ShapeObjects:AllShape[] = GlobalValue.State!.Object.sort(function(SortA, SortB) {
-      return (SortA.zindex > SortB.zindex) ? -1 : 1;
-    });
-    return (
-      <Stage
-        width={CanvasSize[0]}    //幅指定と微調整
-        height={CanvasSize[1]}   //高さ指定と微調整
-        onMouseDown={checkDeselect}
-        onTouchStart={checkDeselect}
-        style={{
-          pointerEvents: 'auto',
-        }}
-      >
-        <Layer>
-          {ShapeObjects.map((obj: Shape, i: number) => {
-            if (obj != null) {
-              return (
-                <CanvasDraw
-                  key={`obj${i}`} //えらー回避
-                  index={i}
-                  shapeProps={obj} //描画する図形のデータ受け渡し
-                  isSelected={obj.id === selectedId} //selectedIDがrect.idイコールのときtrueを渡す
+    return (SortA.zindex > SortB.zindex) ? -1 : 1;
+  });
+  return (
+    <Stage
+      width={CanvasSize[0]}    //幅指定と微調整
+      height={CanvasSize[1]}   //高さ指定と微調整
+      scaleX={0.5}
+      scaleY={0.5}
+      onMouseDown={checkDeselect}
+      onTouchStart={checkDeselect}
+      style={{
+        pointerEvents: 'auto',
+      }}
+    >
+      <Layer>
+        {ShapeObjects.map((obj: Shape, i: number) => {
+          if (obj != null) {
+            return (
+              <CanvasDraw
+                key={`obj${i}`} //えらー回避
+                index={i}
+                shapeProps={obj} //描画する図形のデータ受け渡し
+                isSelected={obj.id === selectedId} //selectedIDがrect.idイコールのときtrueを渡す
 
-                  onSelect={() => { //クリックまたはタップ時に実行
-                    SelectShape(obj.id);
-                  }}
-                  onChange={(newAttrs: Shape) => {   //図形をtransformした際に更新する
-                    if (GlobalValue.State && GlobalValue.State.SetObject && obj) {
-                      const Objs: Shape[] | undefined = GlobalValue.State.Object;
-                      if (Objs != undefined) {
-                        const Keys: string[] = Object.keys(Objs);
-                        const KeysNumber: number = Number(Keys[i]); //indexに使うためにnumberに変換
-                        Objs[KeysNumber] = newAttrs;
-                        GlobalValue.State.SetObject(Objs);
-                      }
+                onSelect={() => { //クリックまたはタップ時に実行
+                  SelectShape(obj.id);
+                }}
+                onChange={(newAttrs: AllShape) => {   //図形をtransformした際に更新する
+                  if (GlobalValue.State && GlobalValue.State.SetObject && obj) {
+                    const Objs: AllShape[][] = GlobalValue.State.Object;
+                    if (Objs != undefined) {
+                      const Keys: string[] = Object.keys(Objs[GlobalValue.State.ObjectInside]);
+                      const KeysNumber: number = Number(Keys[i]); //indexに使うためにnumberに変換
+                      Objs[GlobalValue.State.ObjectInside][KeysNumber] = newAttrs;
+                      GlobalValue.State.SetObject(Objs);
                     }
-                  }}
-                />
-              );
-            }
-          })}
-        </Layer>
-      </Stage>
+                  }
+                }}
+              />
+            );
+          }
+        })}
+      </Layer>
+    </Stage>
 
-    )
+  )
 };

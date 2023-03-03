@@ -11,15 +11,13 @@ export const TextProperty = (props: {
 }) => {
   const GlobalValue: {
     State?: {
-      Object: AllShape[],
-      SetObject: React.Dispatch<React.SetStateAction<AllShape[]>>,
       Property: AllShape,
       SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
     }
   } = useContext(GlobalContext);
 
-  const [Value, SetValue] = useState<string>(props.Ref!.text);
-  const [Index, SetIndex] = useState<number>(props.Ref!.index);
+  const [Value, SetValue] = useState<string | null>(props.Ref!.text);
+  const [Index, SetIndex] = useState<number | null>(props.Ref!.index);
 
   useEffect(() => {   //選択オブジェクト変更時
     if (GlobalValue.State!.Property) {

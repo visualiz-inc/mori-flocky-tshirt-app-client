@@ -1,0 +1,36 @@
+#footer{
+    margin-top: 16px;
+    width: 100vw;
+    bottom: 0px;
+    text-align: center;
+}
+#SaveButton{
+    background: rgb(230, 230, 230);
+    height: 80px;
+}
+#SaveButton p{
+    color:rgb(0, 0, 0);
+    font: bold 14px 'メイリオ';
+    line-height: 14px;
+}
+#SaveButton img{
+    margin-left: 20px;
+    width: 60px;
+}
+#FootButton{
+    background: rgb(230, 230, 230);
+    display:inline;
+    margin-left: 2.5%;
+    height: 80px;
+    width: 80px;
+}
+#FootButton p{
+    color:rgb(0, 0, 0);
+    font: bold 8px 'メイリオ';
+    line-height: 0px;
+}
+#FootButton img{
+    margin-left: 20px;
+    width: 45px;
+    margin: auto;
+}

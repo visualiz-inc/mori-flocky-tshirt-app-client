@@ -1,5 +1,5 @@
 {
-    "Object": [
+    "FrontObject": [
         {
             "type": "Rect",
             "x": 40,
@@ -33,7 +33,7 @@
             "opacity": 1,
             "strokeWidth": 0,
             "stroke": "#000000",
-            "zindex": 2,
+            "zindex": 0,
             "id": "object1",
             "index": 1
         },
@@ -49,32 +49,9 @@
             "opacity": 1,
             "strokeWidth": 0,
             "stroke": "#000000",
-            "zindex": 4,
+            "zindex": 2,
             "id": "object2",
             "index": 2
-        },
-        {
-            "type": "Text",
-            "x": 40,
-            "y": 10,
-            "width": 170,
-            "height": 60,
-            "text": "Hello\nWorld",
-            "fontFamily": "メイリオ",
-            "align":"left",
-            "fontSize": 30,
-            "fontStyle": "",
-            "scaleX": 1,
-            "scaleY": 1,
-            "rotation": 45,
-            "fill": "#000000",
-            "opacity": 1,
-            "cornerRadius": 0,
-            "strokeWidth": 0,
-            "stroke": "#000000",
-            "zindex": 0,
-            "id": "object3",
-            "index": 3
         },
         {
             "type": "Text",
@@ -97,7 +74,32 @@
             "stroke": "#000000",
             "zindex": 3,
             "id": "object4",
-            "index": 4
+            "index": 3
+        }
+    ],
+    "BackObject": [
+        {
+            "type": "Text",
+            "x": 40,
+            "y": 10,
+            "width": 170,
+            "height": 60,
+            "text": "Hello\nWorld",
+            "fontFamily": "メイリオ",
+            "align":"left",
+            "fontSize": 30,
+            "fontStyle": "",
+            "scaleX": 1,
+            "scaleY": 1,
+            "rotation": 45,
+            "fill": "#000000",
+            "opacity": 1,
+            "cornerRadius": 0,
+            "strokeWidth": 0,
+            "stroke": "#000000",
+            "zindex": 0,
+            "id": "object3",
+            "index": 0
         }
     ]
 }

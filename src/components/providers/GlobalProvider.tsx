@@ -1,5 +1,5 @@
 import { createContext, useState, ReactNode } from "react";
-import { Prop, Svg, Rect, RegularPolygon, Circle, Text, AllShape, TshirtType, MaskType } from "../../Types"
+import { Prop, AllShape, TshirtType, MaskType } from "../../Types"
 
 import ObjectJsonData from '../../json/Object.json';
 import ItemJsonData from '../../json/Item.json';
@@ -10,7 +10,8 @@ export const GlobalProvider = (props: { children: ReactNode }) => {
   const { children } = props;
 
 
-  const [Object, SetObject] = useState<AllShape[]>(ObjectJsonData["Object"]);
+  const [Object, SetObject] = useState<AllShape[][]>([ObjectJsonData["FrontObject"],ObjectJsonData["BackObject"]]);
+  const [ObjectInside,SetObjectInside] = useState<number>(0);
 
   const [Property, SetProperty] =
     useState<AllShape | null>(null);
@@ -25,13 +26,14 @@ export const GlobalProvider = (props: { children: ReactNode }) => {
 
   const Global = {
     CanvasProperty: {
-      Width: 220,
-      Height: 300,
+      Width: 180,
+      Height: 220,
       Border: '2px dashed #ffffff'
     } as Prop,
     ItemsData,
     State: {
       Object, SetObject,
+      ObjectInside,SetObjectInside,
       Property, SetProperty,
       Color, SetColor,
       Item, SetItem,

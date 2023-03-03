@@ -95,7 +95,7 @@ export const CanvasDraw = (props: {
                 <Transformer
                     ref={trRef}
                     anchorStroke='#0000ff' // アンカー枠の色
-                    anchorSize={7.5} // アンカーのサイズ
+                    anchorSize={6} // アンカーのサイズ
                     borderStroke='#6464f5' // 枠の色
                     rotateAnchorOffset={30}
                     boundBoxFunc={(oldBox, newBox) => {

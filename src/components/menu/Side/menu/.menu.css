@@ -1,7 +1,7 @@
 #defaultMenu {
     display:flex;
     flex-flow: column;
-    margin-top: 25px;
+    margin-top: 5px;
 }
 
 #defaultMenu button {
@@ -88,32 +88,36 @@
     position: relative;
     display: block;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 25px;
     height: 100%;
 }
 #OthersButtonBox{
-    position: absolute;
     border-top: 1px solid black;
     width: 100%;
-    bottom: 10px;
     text-align: center;
+    margin-top: 4%;
 }
 #OthersButton{
     background-color: rgb(70, 70, 70);
     color: aliceblue;
     margin-top: 2%;
 }
-#SortLayerDiv{
+#OthersButton p{
+    line-height: 0px;
+    width: 90px;
+}
+
+#OtherStyleDiv{
     display:flex;
     margin-top:10px;
 }
-#SortLayerDiv button{
+#OtherStyleDiv button{
     display: block;
 }
-#SortLayerDiv button img{
+#OtherStyleDiv button img{
     width: 50px;
 }
-#SortLayerDiv button p{
+#OtherStyleDiv button p{
     margin-top: -5px;
     line-height: 0px;
     color: rgb(45, 45, 45);
