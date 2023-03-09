@@ -1,14 +1,14 @@
-import { AllShape } from "../../../../../../Types"
+import { AllShape } from "../../../../../Types"
 
 import { useContext } from 'react';
-import { GlobalContext } from '../../../../../providers/GlobalProvider';
-import '../../.menu.css';
-import { Box, Button } from "@mui/material";
+import { GlobalContext } from '../../../../providers/GlobalProvider';
+import '../.menu.css';
+import { Button } from "@mui/material";
 
-import LayerTop from '../../../../../../img/SideIcon/Layer/LayerTop.svg';
-import LayerUp from '../../../../../../img/SideIcon/Layer/LayerUp.svg';
-import LayerDown from '../../../../../../img/SideIcon/Layer/LayerDown.svg';
-import LayerBottom from '../../../../../../img/SideIcon/Layer/LayerBottom.svg';
+import LayerTop from '../../../../../img/SideIcon/Layer/LayerTop.svg';
+import LayerUp from '../../../../../img/SideIcon/Layer/LayerUp.svg';
+import LayerDown from '../../../../../img/SideIcon/Layer/LayerDown.svg';
+import LayerBottom from '../../../../../img/SideIcon/Layer/LayerBottom.svg';
 
 export const Sort = () => {
     const GlobalValue: {
@@ -95,7 +95,6 @@ export const Sort = () => {
             ...GlobalValue.State!.Property,
             zindex: GlobalValue.State!.Object[GlobalValue.State!.ObjectInside].length -1
         }
-        console.log(GlobalValue.State!.Object[GlobalValue.State!.ObjectInside].length)
         Objects[GlobalValue.State!.ObjectInside][TopObject.index]=TopObject;    //元のindexに代入
         GlobalValue.State!.SetProperty(TopObject);
         GlobalValue.State!.SetObject(Objects);

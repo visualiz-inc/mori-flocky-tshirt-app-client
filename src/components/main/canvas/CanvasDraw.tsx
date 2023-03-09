@@ -5,6 +5,7 @@ import { GlobalContext } from "../../providers/GlobalProvider";
 import { AllShape, Shape } from '../../../Types'
 import { KonvaEventObject } from "konva/lib/Node";
 import Konva from "konva";
+import { Box } from "konva/lib/shapes/Transformer";
 
 export const CanvasDraw = (props: {
     index: number,
@@ -15,6 +16,13 @@ export const CanvasDraw = (props: {
 }) => {
     const GlobalValue: {
         State?: {
+            Object: AllShape[][];
+            SetObject: React.Dispatch<React.SetStateAction<AllShape[][]>>,
+            ObjectInside: number,
+            ObjectLog: AllShape[][][],
+            SetObjectLog: React.Dispatch<React.SetStateAction<AllShape[][][]>>,
+            ObjectLogIndex: number,
+            SetObjectLogIndex: React.Dispatch<React.SetStateAction<number>>,
             SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
         }
     } = useContext(GlobalContext);
@@ -63,14 +71,11 @@ export const CanvasDraw = (props: {
             index: props.index,
 
             rotation: rotation,
-            width: Math.ceil(node.width() * 10) / 10,
-            height: Math.ceil(node.height() * 10) / 10,
 
-            x: Math.round(node.x()), 
+            x: Math.round(node.x()),
             y: Math.round(node.y()),  //x,y座標を更新
-
-            scaleX: Math.round(node.scaleX() * 100) / 100,   //widthを更新
-            scaleY: Math.round(node.scaleY() * 100) / 100, //heightを更新
+            scaleX: Math.round(node.scaleX() * 100) / 100,   //scalexを更新
+            scaleY: Math.round(node.scaleY() * 100) / 100, //scaleyを更新
         }
     }
 
@@ -86,9 +91,9 @@ export const CanvasDraw = (props: {
                 <RegularPolygon sides={0} radius={0} {...DrawProperty} />
             )}
             {
-            props.shapeProps.type == 'Text' && (
-                <Text {...DrawProperty} />
-            )}
+                props.shapeProps.type == 'Text' && (
+                    <Text {...DrawProperty} />
+                )}
 
 
             {props.isSelected && (  //isSelected == true
@@ -98,7 +103,7 @@ export const CanvasDraw = (props: {
                     anchorSize={6} // アンカーのサイズ
                     borderStroke='#6464f5' // 枠の色
                     rotateAnchorOffset={30}
-                    boundBoxFunc={(oldBox, newBox) => {
+                    boundBoxFunc={(oldBox: Box, newBox: Box) => {
                         UpdateProperty();
                         // もし変形後の幅か高さが5以下の場合、直前のサイズに戻す
                         //変形の最小値を設定している
@@ -106,8 +111,31 @@ export const CanvasDraw = (props: {
                             return oldBox;
                         }
                         return newBox;
-
                     }}
+                    onTransformEnd={(e: KonvaEventObject<Event>) => {
+
+                        const node: Konva.Node = e.target;
+                        let rotation: number = Math.round(node.rotation());
+                        if (rotation < 0) rotation = 360 + rotation;  //値を使いやすくする
+                        let Objs: AllShape[][] = GlobalValue.State!.Object;
+                        Objs[GlobalValue.State!.ObjectInside][e.target.index] = {
+                            ...Objs[GlobalValue.State!.ObjectInside][e.target.index],
+
+                            rotation: rotation,
+                            x: Math.round(node.x()),
+                            y: Math.round(node.y()),  //x,y座標を更新
+                            scaleX: Math.round(node.scaleX() * 100) / 100,   //scalexを更新
+                            scaleY: Math.round(node.scaleY() * 100) / 100, //scaleyを更新
+                        }
+                        GlobalValue.State!.SetObject(Objs);
+
+
+                        console.log('ログを更新');
+                        const Logs: AllShape[][][] = GlobalValue.State!.ObjectLog.slice(0, GlobalValue.State!.ObjectLogIndex + 1).concat([JSON.parse(JSON.stringify(Objs))]);
+                        GlobalValue.State!.SetObjectLog(Logs);
+                        GlobalValue.State!.SetObjectLogIndex(GlobalValue.State!.ObjectLogIndex + 1);
+                    }}
+
                 />
             )}
         </>

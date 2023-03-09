@@ -1,12 +1,13 @@
 import { FormControl, TextField } from '@mui/material';
-import { useContext, useEffect, useState } from 'react';
+import { FocusEventHandler, useContext, useEffect, useState } from 'react';
 
-import { Svg, Rect, RegularPolygon, Circle, Text, AllShape, Shape } from "../../../../../../Types"
-import { GlobalContext } from '../../../../../providers/GlobalProvider';
+import { Svg, Rect, RegularPolygon, Circle, Text, AllShape, Shape } from "../../../../../Types"
+import { GlobalContext } from '../../../../providers/GlobalProvider';
 type AllPropertyShapeType = (Shape & Rect & RegularPolygon & Circle & Text & Svg) | null;
 
 export const TextProperty = (props: {
   onChange: Function,
+  onBlur: (flag: boolean) => void,
   Ref: AllPropertyShapeType
 }) => {
   const GlobalValue: {
@@ -29,17 +30,17 @@ export const TextProperty = (props: {
     }
   }, [GlobalValue.State!.Property])
 
-
+  const [ChangeFlag, SetChangeFlag] = useState<boolean>(false); //変更したか
   const ChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     //文字のサイズを再定義する
     const textCtx = document.createElement('canvas').getContext('2d');
     textCtx!.font = `${props.Ref!.fontStyle} ${props.Ref!.fontSize}px ${props.Ref!.fontFamily}`;
 
     const textWidth: number = Math.max(
-      e.target.value.split('\n').map((text)=>{  //テキストの幅を取得
+      e.target.value.split('\n').map((text) => {  //テキストの幅を取得
         return textCtx!.measureText(text).width
       }).reduce((el1, el2) => el1 >= el2 ? el1 : el2) //配列内の最大値を取得
-      ,5);  //最小を設定 5
+      , 5);  //最小を設定 5
     const textHeight: number =
       Math.max(e.target.value.split('\n').length * props.Ref!.fontSize, 5);
 
@@ -49,6 +50,10 @@ export const TextProperty = (props: {
       height: textHeight
     }, props.Ref, GlobalValue.State!);
     SetValue(e.target.value);
+    SetChangeFlag(true);
+  }
+  const FocusElem = () => { //フォーカスしたときFlagを初期化
+    SetChangeFlag(false);
   }
   return (
     <FormControl variant="outlined">
@@ -57,6 +62,8 @@ export const TextProperty = (props: {
         multiline
         label="テキスト"
         value={Value}
+        onFocus={FocusElem}
+        onBlur={() => props.onBlur(ChangeFlag)}
         onChange={ChangeValue}
         size='small'
       />

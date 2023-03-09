@@ -10,8 +10,10 @@ export const GlobalProvider = (props: { children: ReactNode }) => {
   const { children } = props;
 
 
-  const [Object, SetObject] = useState<AllShape[][]>([ObjectJsonData["FrontObject"],ObjectJsonData["BackObject"]]);
-  const [ObjectInside,SetObjectInside] = useState<number>(0);
+  const [Object, SetObject] = useState<AllShape[][]>([ObjectJsonData["FrontObject"],ObjectJsonData["BackObject"]]); //オブジェクト情報
+  const [ObjectInside,SetObjectInside] = useState<number>(0);           //裏表
+  const [ObjectLog,SetObjectLog] = useState<AllShape[][][]>([JSON.parse(JSON.stringify(Object))]);  //オブジェクトログ
+  const [ObjectLogIndex,SetObjectLogIndex] = useState<number>(0);       //オブジェクトログのインデックス
 
   const [Property, SetProperty] =
     useState<AllShape | null>(null);
@@ -34,6 +36,8 @@ export const GlobalProvider = (props: { children: ReactNode }) => {
     State: {
       Object, SetObject,
       ObjectInside,SetObjectInside,
+      ObjectLog,SetObjectLog,
+      ObjectLogIndex,SetObjectLogIndex,
       Property, SetProperty,
       Color, SetColor,
       Item, SetItem,

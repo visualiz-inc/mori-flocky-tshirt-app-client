@@ -1,10 +1,10 @@
-import { Svg, Rect, RegularPolygon, Circle, Text, AllShape, Shape } from "../../../../../../Types"
+import { Svg, Rect, RegularPolygon, Circle, Text, AllShape, Shape } from "../../../../../Types"
 type AllPropertyShapeType = (Shape & Rect & RegularPolygon & Circle & Text & Svg) | null;
 
 
 import { useContext, useEffect, useState } from 'react';
-import { GlobalContext } from '../../../../../providers/GlobalProvider';
-import '../../.menu.css';
+import { GlobalContext } from '../../../../providers/GlobalProvider';
+import '../.menu.css';
 import { Box, Button } from "@mui/material";
 
 import { TextProperty } from './Text';
@@ -13,9 +13,13 @@ import { Sort } from "./Sort";
 export const PropertyWindow = () => {
     const GlobalValue: {
         State?: {
+            ObjectLogIndex: number;
             Object: AllShape[][],
-            SetObject: React.Dispatch<React.SetStateAction<AllShape[][]>>,
-            Property: AllShape,
+            SetObject: React.Dispatch<React.SetStateAction<AllShape[][]>>
+            ObjectLog: AllShape[][][],
+            SetObjectLog: React.Dispatch<React.SetStateAction<AllShape[][][]>>,
+            SetObjectLogIndex: React.Dispatch<React.SetStateAction<number>>,
+            Property: AllShape | null,
             SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
         }
     } = useContext(GlobalContext);
@@ -36,14 +40,21 @@ export const PropertyWindow = () => {
         }
 
         if (ref) {
-            let Object :AllShape[][] = State.Object;
-            Object[State.ObjectInside] = (State.Object[State.ObjectInside].map((obj, index) =>
-                (index == ref.index ? newProperty : obj)));      //Object代入
+            let Object: AllShape[][] = State.Object;
+            Object[State.ObjectInside] = (State.Object[State.ObjectInside].map((obj) =>
+                (obj.id == ref.id ? newProperty : obj)));      //Object代入
             State.SetObject(Object);
         }
         State.SetProperty(newProperty);
     };
-
+    const BlurElem = (flag: boolean) => {    //フォーカス解除時
+        if (flag == true) {   //値が変更されていたら
+            console.log('ログを更新');
+            const Logs: AllShape[][][] = GlobalValue.State!.ObjectLog.slice(0, GlobalValue.State!.ObjectLogIndex + 1).concat([JSON.parse(JSON.stringify(GlobalValue.State!.Object))]);
+            GlobalValue.State!.SetObjectLog(Logs);
+            GlobalValue.State!.SetObjectLogIndex(GlobalValue.State!.ObjectLogIndex + 1);
+        }
+    }
     useEffect(() => {
         SetRefProperty(GlobalValue.State!.Property as AllPropertyShapeType);
     }, [GlobalValue.State!.Property]);
@@ -56,7 +67,7 @@ export const PropertyWindow = () => {
             SetOthersProperty(0)
         }
     }
-    if (!GlobalValue.State!.Property || !RefProperty) {    //選択オブジェクトがない場合
+    if (!GlobalValue.State!.Property || !RefProperty) {    //選択オブジェクトがないとき
         return (
 
             <Box id='PropertyMenu'>
@@ -69,7 +80,7 @@ export const PropertyWindow = () => {
             <>
                 <Box id='PropertyMenu'>
                     {Keys!.includes('text') && (
-                        <TextProperty onChange={ChangeProperty} Ref={RefProperty} />
+                        <TextProperty onChange={ChangeProperty} onBlur={BlurElem} Ref={RefProperty} />
                     )}
                     <Box id='OthersButtonBox'>
                         <Button
