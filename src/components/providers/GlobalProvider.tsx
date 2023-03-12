@@ -14,6 +14,7 @@ export const GlobalProvider = (props: { children: ReactNode }) => {
   const [ObjectInside,SetObjectInside] = useState<number>(0);           //裏表
   const [ObjectLog,SetObjectLog] = useState<AllShape[][][]>([JSON.parse(JSON.stringify(Object))]);  //オブジェクトログ
   const [ObjectLogIndex,SetObjectLogIndex] = useState<number>(0);       //オブジェクトログのインデックス
+  const [RefObjectLog,SetRefObjectLog] = useState<AllShape[][] | null>(null)  //バグ防止用バックアップ
 
   const [Property, SetProperty] =
     useState<AllShape | null>(null);
@@ -32,12 +33,14 @@ export const GlobalProvider = (props: { children: ReactNode }) => {
       Height: 220,
       Border: '2px dashed #ffffff'
     } as Prop,
+    LogMaxTimes : 20, //ログの最大数
     ItemsData,
     State: {
       Object, SetObject,
       ObjectInside,SetObjectInside,
       ObjectLog,SetObjectLog,
       ObjectLogIndex,SetObjectLogIndex,
+      RefObjectLog,SetRefObjectLog,
       Property, SetProperty,
       Color, SetColor,
       Item, SetItem,

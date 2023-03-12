@@ -17,10 +17,13 @@ export const CanvasMain = () => {
       SetObjectLog: React.Dispatch<React.SetStateAction<AllShape[][][]>>,
       ObjectLogIndex: number,
       SetObjectLogIndex: React.Dispatch<React.SetStateAction<number>>,
+      RefObjectLog: AllShape[][] | null,
+      SetRefObjectLog: React.Dispatch<React.SetStateAction<AllShape[][] | null>>,
       ObjectInside: number,
       Property: AllShape | null,
       SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
     },
+    LogMaxTimes?: number,
     CanvasProperty?: Prop
   } = useContext(GlobalContext);  //グローバル変数を読み込み
 
@@ -37,11 +40,13 @@ export const CanvasMain = () => {
 
       if (  //保存されていなかった場合
         JSON.stringify(GlobalValue.State!.Object) != JSON.stringify(GlobalValue.State!.ObjectLog[GlobalValue.State!.ObjectLogIndex]) && selectedId) {
-          
-          console.log('ログを更新');
-          const Logs: AllShape[][][] = GlobalValue.State!.ObjectLog.slice(0, GlobalValue.State!.ObjectLogIndex + 1).concat([JSON.parse(JSON.stringify(GlobalValue.State!.Object))]);
-          GlobalValue.State!.SetObjectLog(Logs);
-          GlobalValue.State!.SetObjectLogIndex(GlobalValue.State!.ObjectLogIndex + 1);
+
+
+        const LogIndex = Math.min(GlobalValue.State!.ObjectLogIndex + 1, GlobalValue.LogMaxTimes!);
+        const MinIndex = Math.max(0, GlobalValue.State!.ObjectLog.length - GlobalValue.LogMaxTimes!);
+        const Logs: AllShape[][][] = GlobalValue.State!.ObjectLog.slice(MinIndex, LogIndex).concat([JSON.parse(JSON.stringify(GlobalValue.State!.Object))]);
+        GlobalValue.State!.SetObjectLog(Logs);
+        GlobalValue.State!.SetObjectLogIndex(LogIndex);
       }
       GlobalValue.State!.SetProperty(null);
     }
@@ -91,15 +96,12 @@ export const CanvasMain = () => {
                     GlobalValue.State!.SetObject(Objs);
 
 
-                    console.log('ログを更新');
-                    //console.log(GlobalValue.State!.ObjectLog,JSON.parse(JSON.stringify(Objs)))
-                    const Logs: AllShape[][][] = GlobalValue.State!.ObjectLog.slice(0, GlobalValue.State!.ObjectLogIndex + 1).concat([JSON.parse(JSON.stringify(Objs))]);
-
+                    const LogIndex = Math.min(GlobalValue.State!.ObjectLogIndex + 1, GlobalValue.LogMaxTimes!);
+                    const MinIndex = Math.max(0, GlobalValue.State!.ObjectLog.length - GlobalValue.LogMaxTimes!);
+                    console.log(GlobalValue.State!.ObjectLog.length)
+                    const Logs: AllShape[][][] = GlobalValue.State!.ObjectLog.slice(MinIndex, LogIndex).concat([JSON.parse(JSON.stringify(Objs))]);
                     GlobalValue.State!.SetObjectLog(Logs);
-                    console.log(GlobalValue.State!.ObjectLog)
-                    GlobalValue.State!.SetObjectLogIndex(GlobalValue.State!.ObjectLogIndex + 1);
-                    バグ詳細:undoしてからログを更新すると最新のログがひとつ前のログも上書きする
-                    次回のためにこのエラーを残しておきます
+                    GlobalValue.State!.SetObjectLogIndex(LogIndex);
                   }
                 }}
               />

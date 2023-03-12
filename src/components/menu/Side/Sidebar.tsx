@@ -23,17 +23,18 @@ import { AllShape } from '../../../Types';
 export const Sidebar = () => {
     const GlobalValue: {
         State?: {
-            Object:AllShape[][],
-            SetObject: React.Dispatch<React.SetStateAction<AllShape[][]>>
-            ObjectInside:number,
-            ObjectLog:  AllShape[][][],
-            SetObjectLog: React.Dispatch<React.SetStateAction<AllShape[][][]>>,
-            ObjectLogIndex:number,
-            SetObjectLogIndex:React.Dispatch<React.SetStateAction<number>>,
-            MainWindowProperty: string,
-            SetMainWindowProperty: React.Dispatch<React.SetStateAction<string>>
-            Property: AllShape | null,
-            SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
+            Object: AllShape[][],                                                       //描画されているオブジェクト
+            SetObject: React.Dispatch<React.SetStateAction<AllShape[][]>>               //↑の更新
+            ObjectInside: number,                                                       //オブジェクトの裏表
+            ObjectLog: AllShape[][][],                                                  //オブジェクトのログ
+            SetObjectLog: React.Dispatch<React.SetStateAction<AllShape[][][]>>,         //↑の更新
+            ObjectLogIndex: number,                                                     //ログのインデックス番号
+            SetObjectLogIndex: React.Dispatch<React.SetStateAction<number>>,            //↑の更新
+            RefObjectLog: AllShape[][] | null,                                          //ひとつ前のログ保存
+            MainWindowProperty: string,                                                 //メインウィンドウの種類
+            SetMainWindowProperty: React.Dispatch<React.SetStateAction<string>>         //上の更新
+            Property: AllShape | null,                                                  //選択しているオブジェクトの情報
+            SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>          //↑の更新
         }
     } = useContext(GlobalContext);
 
@@ -58,35 +59,36 @@ export const Sidebar = () => {
     }
 
     const onClickUndo = () => { //戻る
-        if(GlobalValue.State!.ObjectLogIndex == 0){
+        if (GlobalValue.State!.ObjectLogIndex == 0) {
             return;
         }
-            const LogIndex:number = GlobalValue.State!.ObjectLogIndex - 1;
-            GlobalValue.State!.SetObjectLogIndex(LogIndex);
 
-            GlobalValue.State!.SetObject(GlobalValue.State!.ObjectLog[LogIndex]);
-            console.log(LogIndex)
+        const LogIndex: number = GlobalValue.State!.ObjectLogIndex - 1;
+        GlobalValue.State!.SetObjectLogIndex(LogIndex);
 
-            if(GlobalValue.State!.Property != null){
-                GlobalValue.State!.SetProperty(GlobalValue.State!.ObjectLog[LogIndex][GlobalValue.State!.ObjectInside].find((obj) => obj.id ==GlobalValue.State!.Property!.id)!);
-            
+        GlobalValue.State!.SetObject(JSON.parse(JSON.stringify(GlobalValue.State!.ObjectLog[LogIndex])));
+
+        if (GlobalValue.State!.Property != null) {
+            const Property = GlobalValue.State!.ObjectLog[LogIndex][GlobalValue.State!.ObjectInside].find((obj) => obj.id == GlobalValue.State!.Property!.id)!;
+            GlobalValue.State!.SetProperty(Property);
         }
     }
     const onClickRedo = () => { //やり直す
-        if(GlobalValue.State!.ObjectLogIndex == GlobalValue.State!.ObjectLog.length - 1){
+        if (GlobalValue.State!.ObjectLogIndex == GlobalValue.State!.ObjectLog.length - 1) {
             return;
         }
-        const LogIndex:number = GlobalValue.State!.ObjectLogIndex + 1;
+
+        const LogIndex: number = GlobalValue.State!.ObjectLogIndex + 1;
         GlobalValue.State!.SetObjectLogIndex(LogIndex);
 
-        console.log(GlobalValue.State!.ObjectLog)
-        GlobalValue.State!.SetObject(GlobalValue.State!.ObjectLog[LogIndex]);
+        GlobalValue.State!.SetObject(JSON.parse(JSON.stringify(GlobalValue.State!.ObjectLog[LogIndex])));
 
-        if(GlobalValue.State!.Property != null){
-            GlobalValue.State!.SetProperty(GlobalValue.State!.ObjectLog[LogIndex][GlobalValue.State!.ObjectInside].find((obj) => obj.id ==GlobalValue.State!.Property!.id)!);
+        if (GlobalValue.State!.Property != null) {
+            const Property = GlobalValue.State!.ObjectLog[LogIndex][GlobalValue.State!.ObjectInside].find((obj) => obj.id == GlobalValue.State!.Property!.id)!;
+            GlobalValue.State!.SetProperty(Property);
         }
-        }
-    
+    }
+
 
     return (
         <Box id='sidebar'>
@@ -99,8 +101,8 @@ export const Sidebar = () => {
                         >
                             <Button onClick={onClick!}
                                 sx={{
-                                    maxHeight:'30px',
-                                    minWidth:'45px',
+                                    maxHeight: '30px',
+                                    minWidth: '45px',
                                     background: Windows[i] ? "rgb(200, 77, 150)" : "rgb(45, 45, 45)",
                                     "&:hover": Windows[i] ? {
                                         background: "rgb(200, 77, 150)"
@@ -111,13 +113,13 @@ export const Sidebar = () => {
                                 {obj == 'アイテム' &&
                                     <CheckroomIcon fontSize='small' />
                                 }{obj == 'プロパティ' &&
-                                    <BuildIcon fontSize='small'  />
+                                    <BuildIcon fontSize='small' />
                                 }{obj == '写真' &&
-                                    <InsertPhotoIcon fontSize='small'  />
+                                    <InsertPhotoIcon fontSize='small' />
                                 }{obj == 'スタンプ' &&
                                     <img src={StampIcon} />
                                 }{obj == 'テンプレ' &&
-                                    <ColorLensIcon fontSize='small'  />
+                                    <ColorLensIcon fontSize='small' />
                                 }
                             </Button>
                         </Tooltip>
@@ -153,13 +155,13 @@ export const Sidebar = () => {
                     <p className='logMoveArrow'>←</p>
                     <p className='logMoveText'>戻る</p>
                 </Button>
-                
+
                 <Button onClick={onClickRedo}>
                     <p className='logMoveText'>やり直す</p>
                     <p className='logMoveArrow'>→</p>
                 </Button>
             </Box>
         </Box>
-        
+
     );
 };

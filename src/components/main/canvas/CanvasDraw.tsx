@@ -15,6 +15,7 @@ export const CanvasDraw = (props: {
     onChange: Function
 }) => {
     const GlobalValue: {
+        LogMaxTimes?: number,
         State?: {
             Object: AllShape[][];
             SetObject: React.Dispatch<React.SetStateAction<AllShape[][]>>,
@@ -130,10 +131,12 @@ export const CanvasDraw = (props: {
                         GlobalValue.State!.SetObject(Objs);
 
 
-                        console.log('ログを更新');
-                        const Logs: AllShape[][][] = GlobalValue.State!.ObjectLog.slice(0, GlobalValue.State!.ObjectLogIndex + 1).concat([JSON.parse(JSON.stringify(Objs))]);
+
+                        const LogIndex = Math.min(GlobalValue.State!.ObjectLogIndex + 1, GlobalValue.LogMaxTimes!);
+                        const MinIndex = Math.max(0, GlobalValue.State!.ObjectLog.length - GlobalValue.LogMaxTimes!);
+                        const Logs: AllShape[][][] = GlobalValue.State!.ObjectLog.slice(MinIndex, LogIndex).concat([JSON.parse(JSON.stringify(Objs))]);
                         GlobalValue.State!.SetObjectLog(Logs);
-                        GlobalValue.State!.SetObjectLogIndex(GlobalValue.State!.ObjectLogIndex + 1);
+                        GlobalValue.State!.SetObjectLogIndex(LogIndex);
                     }}
 
                 />

@@ -12,6 +12,7 @@ import { Sort } from "./Sort";
 
 export const PropertyWindow = () => {
     const GlobalValue: {
+        LogMaxTimes?: number,
         State?: {
             ObjectLogIndex: number;
             Object: AllShape[][],
@@ -48,11 +49,12 @@ export const PropertyWindow = () => {
         State.SetProperty(newProperty);
     };
     const BlurElem = (flag: boolean) => {    //フォーカス解除時
-        if (flag == true) {   //値が変更されていたら
-            console.log('ログを更新');
-            const Logs: AllShape[][][] = GlobalValue.State!.ObjectLog.slice(0, GlobalValue.State!.ObjectLogIndex + 1).concat([JSON.parse(JSON.stringify(GlobalValue.State!.Object))]);
+        if (flag == true) {   //値が変更されていたらログ更新
+            const LogIndex = Math.min(GlobalValue.State!.ObjectLogIndex + 1, GlobalValue.LogMaxTimes!);
+            const MinIndex = Math.max(0, GlobalValue.State!.ObjectLog.length - GlobalValue.LogMaxTimes!);
+            const Logs: AllShape[][][] = GlobalValue.State!.ObjectLog.slice(MinIndex, LogIndex).concat([JSON.parse(JSON.stringify(GlobalValue.State!.Object))]);
             GlobalValue.State!.SetObjectLog(Logs);
-            GlobalValue.State!.SetObjectLogIndex(GlobalValue.State!.ObjectLogIndex + 1);
+            GlobalValue.State!.SetObjectLogIndex(LogIndex);
         }
     }
     useEffect(() => {
