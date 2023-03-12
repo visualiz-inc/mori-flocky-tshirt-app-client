@@ -1,3 +1,18 @@
+#canvasWindow{
+  position: relative;
+  margin-top: 2.5vh;
+  margin-left: 10vw;
+  pointer-events: none;
+}
+#canvasWindow img{
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+}
+#canvasWindow div{
+  position: absolute;
+}
+
 #selectWindow{
   margin-top: 15px;
   height: 80vh;

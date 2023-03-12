@@ -51,11 +51,14 @@ export type Circle = Shape& {
     radius: number,
 }
 
-export type Svg = Shape & {
+export type Image = Shape & {
     src: string
 }
 
-export type AllShape = Rect | Text | RegularPolygon | Circle | Svg;
+export type AllShape = Rect | Text | RegularPolygon | Circle | Image;
+
+export type AllPropertyShapeType = (Shape & Rect & RegularPolygon & Circle & Text & Image) | null;
+
 export type ItemType = {
     ItemType: string[],
     ImageSrc:string,

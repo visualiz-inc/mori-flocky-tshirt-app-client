@@ -1,13 +1,20 @@
-import { Svg, Rect, RegularPolygon, Circle, Text, AllShape, Shape } from "../../../../../Types"
-type AllPropertyShapeType = (Shape & Rect & RegularPolygon & Circle & Text & Svg) | null;
+import { AllShape, AllPropertyShapeType } from "../../../../../Types"
 
 
 import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../../../../providers/GlobalProvider';
 import '../.menu.css';
-import { Box, Button } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction, Box, Button, Paper } from "@mui/material";
 
-import { TextProperty } from './Text';
+import SquareIcon from '@mui/icons-material/Square';
+import CircleIcon from '@mui/icons-material/Circle';
+import PentagonIcon from '@mui/icons-material/Pentagon';
+import TextFormatIcon from '@mui/icons-material/TextFormat';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
+import InterestsIcon from '@mui/icons-material/Interests';
+import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
+
+import { TextProperty, FontSizeProperty, FontStyleProperty, FontFamilyProperty } from './Text';
 import { Sort } from "./Sort";
 
 export const PropertyWindow = () => {
@@ -61,19 +68,12 @@ export const PropertyWindow = () => {
         SetRefProperty(GlobalValue.State!.Property as AllPropertyShapeType);
     }, [GlobalValue.State!.Property]);
 
-    const [OthersProperty, SetOthersProperty] = useState<number>(0);
-    const onClickOther = () => {    //その他ボタンクリック
-        if (OthersProperty == 0) {
-            SetOthersProperty(1)
-        } else if (OthersProperty == 1) {
-            SetOthersProperty(0)
-        }
-    }
+    const [PageIndex, SetPageIndex] = useState<number>(0);
     if (!GlobalValue.State!.Property || !RefProperty) {    //選択オブジェクトがないとき
         return (
 
             <Box id='PropertyMenu'>
-                <p>オブジェクトを選択してください</p>
+                <p>オブジェクトを<br/>選択してください</p>
             </Box>
         )
     } else {
@@ -81,27 +81,52 @@ export const PropertyWindow = () => {
         return (
             <>
                 <Box id='PropertyMenu'>
-                    {Keys!.includes('text') && (
-                        <TextProperty onChange={ChangeProperty} onBlur={BlurElem} Ref={RefProperty} />
+                    {PageIndex == 0 && (
+                        <>
+                            {Keys!.includes('text') && (
+                                <>
+                                    <TextProperty onChange={ChangeProperty} onBlur={BlurElem} Ref={RefProperty} />
+                                    <FontSizeProperty onChange={ChangeProperty} onBlur={BlurElem} Ref={RefProperty} />
+                                    <FontStyleProperty onChange={ChangeProperty} onBlur={BlurElem} Ref={RefProperty} />
+                                    <FontFamilyProperty onChange={ChangeProperty} onBlur={BlurElem} Ref={RefProperty} />
+                                </>
+                            )}
+                        </>
                     )}
-                    <Box id='OthersButtonBox'>
-                        <Button
-                            id='OthersButton'
-                            onClick={onClickOther}
-                        >
-                            {OthersProperty == 0 && (
-                                <p>その他の設定</p>
-                            )}
-                            {OthersProperty == 1 && (
-                                <p>閉じる</p>
-                            )}
-                        </Button>
-                        {OthersProperty == 1 && (
-                            <Sort />
-                        )}
-                    </Box>
+                    {PageIndex == 1 && (
+                        <p>共通</p>
+                    )}
+                    {PageIndex == 2 && (
+                        <Sort />
+                    )}
                 </Box>
-
+                <Paper id="PageMenu" elevation={3}>
+                        <BottomNavigation
+                            showLabels
+                            value={PageIndex}
+                            onChange={(e, value: number) => {
+                                SetPageIndex(value);
+                            }}
+                        >
+                            {RefProperty.type == 'Rect' && (
+                                <BottomNavigationAction value={0} label="短形" icon={<SquareIcon />} />
+                            )}
+                            {RefProperty.type == 'Circle' && (
+                                <BottomNavigationAction value={0} label="円形" icon={<CircleIcon />} />
+                            )}
+                            {RefProperty.type == 'RegularPolygon' && (
+                                <BottomNavigationAction value={0} label="多角形" icon={<PentagonIcon />} />
+                            )}
+                            {RefProperty.type == 'Text' && (
+                                <BottomNavigationAction value={0} label="文字" icon={<TextFormatIcon />} />
+                            )}
+                            {RefProperty.type == 'Image' && (
+                                <BottomNavigationAction value={0} label="画像" icon={<InsertPhotoIcon />} />
+                            )}
+                            <BottomNavigationAction value={1} label="共通" icon={<InterestsIcon />} />
+                            <BottomNavigationAction value={2} label="その他" icon={<HomeRepairServiceIcon />} />
+                        </BottomNavigation>
+                    </Paper>
             </>
         )
     }

@@ -2,6 +2,15 @@
     display:flex;
     flex-flow: column;
     margin-top: 5px;
+    height: 100%;
+    overflow-y: scroll;
+}
+#defaultMenu::-webkit-scrollbar {
+    width: 10px;
+}
+
+#defaultMenu::-webkit-scrollbar-thumb {
+    background-color: #ccc;
 }
 
 #defaultMenu button {
@@ -25,7 +34,16 @@
     pointer-events: none;
 }
 
-
+#itemMenu {
+    height: 100%;
+    overflow-y: scroll;
+}
+#itemMenu::-webkit-scrollbar {
+    width: 10px;
+}
+#itemMenu::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+}
 #itemMenu h1 {
     text-align: center;
     font: bold 24px 'メイリオ';
@@ -88,8 +106,28 @@
     position: relative;
     display: block;
     text-align: center;
-    margin-top: 25px;
+    margin-top: 15px;
+    margin-left: 2.5%;
+    width: 95%;
     height: 100%;
+    overflow-y: scroll;
+}
+#PropertyMenu::-webkit-scrollbar {
+    width: 10px;
+}
+#PropertyMenu::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+}
+.PropertyInput{
+    width: 80%;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.PropertyInput span{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    width: 20%;
+    
 }
 #OthersButtonBox{
     border-top: 1px solid black;
@@ -122,4 +160,9 @@
     line-height: 0px;
     color: rgb(45, 45, 45);
     font-weight: bold;
+}
+#PageMenu{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }

@@ -61,7 +61,7 @@ export const Sort = () => {
         GlobalValue.State!.SetObject(Objects);
     }}
     const onClockLayerDown = () => {      //下へ移動
-        if(GlobalValue.State!.Property.zindex != GlobalValue.State!.Object[GlobalValue.State!.ObjectInside].length){
+        if(GlobalValue.State!.Property.zindex != GlobalValue.State!.Object[GlobalValue.State!.ObjectInside].length - 1){
         let Objects:AllShape[][] = GlobalValue.State!.Object;
         Objects[GlobalValue.State!.ObjectInside] = Objects[GlobalValue.State!.ObjectInside].map((obj) => {
             const zindex = obj.zindex;
@@ -93,7 +93,7 @@ export const Sort = () => {
 
         const TopObject: AllShape = {
             ...GlobalValue.State!.Property,
-            zindex: GlobalValue.State!.Object[GlobalValue.State!.ObjectInside].length -1
+            zindex: GlobalValue.State!.Object[GlobalValue.State!.ObjectInside].length - 1
         }
         Objects[GlobalValue.State!.ObjectInside][TopObject.index]=TopObject;    //元のindexに代入
         GlobalValue.State!.SetProperty(TopObject);

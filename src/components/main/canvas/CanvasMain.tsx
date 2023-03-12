@@ -98,7 +98,6 @@ export const CanvasMain = () => {
 
                     const LogIndex = Math.min(GlobalValue.State!.ObjectLogIndex + 1, GlobalValue.LogMaxTimes!);
                     const MinIndex = Math.max(0, GlobalValue.State!.ObjectLog.length - GlobalValue.LogMaxTimes!);
-                    console.log(GlobalValue.State!.ObjectLog.length)
                     const Logs: AllShape[][][] = GlobalValue.State!.ObjectLog.slice(MinIndex, LogIndex).concat([JSON.parse(JSON.stringify(Objs))]);
                     GlobalValue.State!.SetObjectLog(Logs);
                     GlobalValue.State!.SetObjectLogIndex(LogIndex);
