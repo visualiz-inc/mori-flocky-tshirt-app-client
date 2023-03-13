@@ -156,13 +156,15 @@ export const RotationProperty = (props: {   //回転
       let TargetValue = Number(e.target.value);
 
       if (TargetValue < 0) {
-        SetValue(String(TargetValue % 360 + 360));
+
+        TargetValue = TargetValue % 360 + 360;
       } else if (TargetValue >= 360) {
-        SetValue(String(TargetValue % 360));
+        TargetValue = TargetValue % 360;
       }
       props.onChange({
         rotation: TargetValue,
       }, props.Ref, GlobalValue.State!);
+      SetValue(String(TargetValue));
       SetChangeFlag(true);
     }
     SetValue(e.target.value);
@@ -373,24 +375,40 @@ export const FillProperty = (props: {   //塗りつぶし 枠線
         props.Update(ChangeFlag);
         SetChangeFlag(false);
       }
-    }}>
+    }}
+    onMouseLeave={() => SetOpenColorPallet(0)}
+    >
       <Box sx={{ display: 'flex' }}>
 
-        <Button
+        <Button //塗りつぶし
           sx={{
             ...ButtonStyle,
             borderColor: props.Ref!.fill
           }}
-          onClick={() => SetOpenColorPallet(OpenColorPallet == 0 ? 1 : 0)}>
+          onClick={() => {
+            if(OpenColorPallet == 1){
+                SetOpenColorPallet(0);
+            }else {
+                SetOpenColorPallet(1);
+            }
+            }}
+            >
           <p className='PropertyInputText'>塗りつぶし</p>
           <HexagonIcon sx={{ color: props.Ref!.fill }} />
         </Button>
-        <Button
+        <Button //枠色
           sx={{
             ...ButtonStyle,
             borderColor: props.Ref!.stroke
           }}
-          onClick={() => SetOpenColorPallet(OpenColorPallet == 0 ? 2 : 0)}>
+          
+          onClick={() => {
+            if(OpenColorPallet == 2){
+                SetOpenColorPallet(0);
+            }else {
+                SetOpenColorPallet(2);
+            }
+            }}>
           <p className='PropertyInputText'>枠色<br /></p>
           <HexagonIcon sx={{ color: props.Ref!.stroke }} />
         </Button>
