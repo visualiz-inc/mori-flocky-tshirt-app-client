@@ -62,7 +62,6 @@ export const Sidebar = () => {
         if (GlobalValue.State!.ObjectLogIndex == 0) {
             return;
         }
-
         const LogIndex: number = GlobalValue.State!.ObjectLogIndex - 1;
         GlobalValue.State!.SetObjectLogIndex(LogIndex);
 
@@ -101,8 +100,9 @@ export const Sidebar = () => {
                         >
                             <Button onClick={onClick!}
                                 sx={{
-                                    maxHeight: '30px',
-                                    minWidth: '45px',
+                                    maxHeight: '40px',
+                                    minHeight: ' 40px',
+                                    minWidth: '50px',
                                     background: Windows[i] ? "rgb(200, 77, 150)" : "rgb(45, 45, 45)",
                                     "&:hover": Windows[i] ? {
                                         background: "rgb(200, 77, 150)"
@@ -111,15 +111,15 @@ export const Sidebar = () => {
                                     }
                                 }}>
                                 {obj == 'アイテム' &&
-                                    <CheckroomIcon fontSize='small' />
+                                    <CheckroomIcon fontSize='medium' />
                                 }{obj == 'プロパティ' &&
-                                    <BuildIcon fontSize='small' />
+                                    <BuildIcon fontSize='medium' />
                                 }{obj == '写真' &&
-                                    <InsertPhotoIcon fontSize='small' />
+                                    <InsertPhotoIcon fontSize='medium' />
                                 }{obj == 'スタンプ' &&
                                     <img src={StampIcon} />
                                 }{obj == 'テンプレ' &&
-                                    <ColorLensIcon fontSize='small' />
+                                    <ColorLensIcon fontSize='medium' />
                                 }
                             </Button>
                         </Tooltip>

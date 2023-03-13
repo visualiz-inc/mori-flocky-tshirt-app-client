@@ -91,10 +91,9 @@ export const CanvasDraw = (props: {
             {props.shapeProps.type == 'RegularPolygon' && (
                 <RegularPolygon sides={0} radius={0} {...DrawProperty} />
             )}
-            {
-                props.shapeProps.type == 'Text' && (
-                    <Text {...DrawProperty} />
-                )}
+            {props.shapeProps.type == 'Text' && (
+                <Text {...DrawProperty} />
+            )}
 
 
             {props.isSelected && (  //isSelected == true

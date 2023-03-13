@@ -8,7 +8,7 @@ import '../.menu.css';
 
 export const TextProperty = (props: {   //テキスト
   onChange: Function,
-  onBlur: (flag: boolean) => void,
+  Update: (flag: boolean) => void,
   Ref: AllPropertyShapeType
 }) => {
   const GlobalValue: {
@@ -24,9 +24,8 @@ export const TextProperty = (props: {   //テキスト
   useEffect(() => {   //選択オブジェクト変更時
     if (GlobalValue.State!.Property && GlobalValue.State!.Property.type == 'Text') {
       if (Id != GlobalValue.State!.Property.id) {
-        const State = GlobalValue.State!.Property as AllPropertyShapeType;
-        SetValue(State!.text);
-        SetId(State!.id);
+        SetValue((GlobalValue.State!.Property as AllPropertyShapeType)!.text);
+        SetId(GlobalValue.State!.Property.id);
       }
     }
   }, [GlobalValue.State!.Property])
@@ -39,7 +38,7 @@ export const TextProperty = (props: {   //テキスト
 
     const textWidth: number = Math.max(
       e.target.value.split('\n').map((text) => {  //テキストの幅を取得
-        return textCtx!.measureText(text).width
+        return textCtx!.measureText(text).width + props.Ref!.letterSpacing * text.length
       }).reduce((el1, el2) => el1 >= el2 ? el1 : el2) //配列内の最大値を取得
       , 5);  //最小を設定 5
     const textHeight: number =
@@ -47,14 +46,13 @@ export const TextProperty = (props: {   //テキスト
 
     props.onChange({
       text: e.target.value,
+      offsetX: textWidth / 2,
+      offsetY: textHeight / 2,
       width: textWidth,
       height: textHeight
     }, props.Ref, GlobalValue.State!);
     SetValue(e.target.value);
     SetChangeFlag(true);
-  }
-  const FocusElem = () => { //フォーカスしたときFlagを初期化
-    SetChangeFlag(false);
   }
   return (
     <Box className='PropertyInput'>
@@ -64,18 +62,17 @@ export const TextProperty = (props: {   //テキスト
           size='small'
           label="テキスト"
           value={Value}
-          onFocus={FocusElem}
-          onBlur={() => props.onBlur(ChangeFlag)}
+          onFocus={() =>SetChangeFlag(false)}
+          onBlur={() => props.Update(ChangeFlag)}
           onChange={ChangeValue}
         />
       </FormControl>
     </Box>
   )
 }
-
 export const FontSizeProperty = (props: {   //テキストサイズ
   onChange: Function,
-  onBlur: (flag: boolean) => void,
+  Update: (flag: boolean) => void,
   Ref: AllPropertyShapeType
 }) => {
   const GlobalValue: {
@@ -85,43 +82,44 @@ export const FontSizeProperty = (props: {   //テキストサイズ
     }
   } = useContext(GlobalContext);
 
-  const [Value, SetValue] = useState<number>(props.Ref!.fontSize);
+  const [Value, SetValue] = useState<string>(String(props.Ref!.fontSize));
   const [Id, SetId] = useState<string>(props.Ref!.id);
 
   useEffect(() => {   //選択オブジェクト変更時
     if (GlobalValue.State!.Property && GlobalValue.State!.Property.type == 'Text') {
       if (Id != GlobalValue.State!.Property.id) {
-        const State = GlobalValue.State!.Property as AllPropertyShapeType;
-        SetValue(State!.fontSize);
-        SetId(State!.id);
+        SetValue(String((GlobalValue.State!.Property as AllPropertyShapeType)!.fontSize));
+        SetId(GlobalValue.State!.Property.id);
       }
     }
   }, [GlobalValue.State!.Property])
 
   const [ChangeFlag, SetChangeFlag] = useState<boolean>(false); //変更したか
   const ChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const TargetValue: number = Math.max(0, Number(e.target.value));
+    
+    if(!isNaN(Number(e.target.value))){
+    const TargetValue: number = Number(e.target.value);
     //文字のサイズを再定義する
     const textCtx: CanvasRenderingContext2D = document.createElement('canvas').getContext('2d')!;
     textCtx!.font = `${props.Ref!.fontStyle} ${TargetValue}px ${props.Ref!.fontFamily}`;
 
     const textWidth: number = Math.max(
       props.Ref!.text.split('\n').map((text) => {  //テキストの幅を取得
-        return textCtx!.measureText(text).width
+        return textCtx!.measureText(text).width + props.Ref!.letterSpacing * text.length
       }).reduce((el1, el2) => el1 >= el2 ? el1 : el2) //配列内の最大値を取得
       , 5);  //最小を設定 5
     const textHeight: number = props.Ref!.text.split('\n').length * TargetValue;
 
     props.onChange({
       fontSize: Math.max(TargetValue, 1),
+      offsetX: textWidth / 2,
+      offsetY: textHeight / 2,
       width: textWidth,
       height: textHeight
     }, props.Ref, GlobalValue.State!);
-    SetValue(TargetValue);
+    SetValue(e.target.value);
     SetChangeFlag(true);
   }
-  const FocusElem = () => { //フォーカスしたときFlagを初期化
-    SetChangeFlag(false);
   }
   return (
     <Box className='PropertyInput'>
@@ -130,19 +128,21 @@ export const FontSizeProperty = (props: {   //テキストサイズ
           size='small'
           type="number"
           label="テキストサイズ"
+          inputProps={{
+            min: "0"
+          }}
           value={Value}
-          onFocus={FocusElem}
-          onBlur={() => props.onBlur(ChangeFlag)}
+          onFocus={() =>SetChangeFlag(false)}
+          onBlur={() => props.Update(ChangeFlag)}
           onChange={ChangeValue}
         />
       </FormControl>
     </Box>
   )
 }
-
 export const FontStyleProperty = (props: {   //テキストスタイル
   onChange: Function,
-  onBlur: (flag: boolean) => void,
+  Update: (flag: boolean) => void,
   Ref: AllPropertyShapeType
 }) => {
   const GlobalValue: {
@@ -159,9 +159,8 @@ export const FontStyleProperty = (props: {   //テキストスタイル
   useEffect(() => {   //選択オブジェクト変更時
     if (GlobalValue.State!.Property && GlobalValue.State!.Property.type == 'Text') {
       if (Id != GlobalValue.State!.Property.id) {
-        const State = GlobalValue.State!.Property as AllPropertyShapeType;
-        SetBoldCheck(State!.fontStyle.includes('bold') ? true : false);
-        SetItalicCheck(State!.fontStyle.includes('italic') ? true : false)
+        SetBoldCheck((GlobalValue.State!.Property as AllPropertyShapeType)!.fontStyle.includes('bold') ? true : false);
+        SetItalicCheck((GlobalValue.State!.Property as AllPropertyShapeType)!.fontStyle.includes('italic') ? true : false)
         SetId(props.Ref!.id);
       }
     }
@@ -183,13 +182,15 @@ export const FontStyleProperty = (props: {   //テキストスタイル
 
     const textWidth: number = Math.max(
       props.Ref!.text.split('\n').map((text) => {  //テキストの幅を取得
-        return textCtx!.measureText(text).width
+        return textCtx!.measureText(text).width + props.Ref!.letterSpacing * text.length
       }).reduce((el1, el2) => el1 >= el2 ? el1 : el2) //配列内の最大値を取得
       , 5);  //最小を設定 5
     const textHeight: number = props.Ref!.text.split('\n').length * props.Ref!.fontSize;
 
     props.onChange({
       fontStyle,
+      offsetX: textWidth / 2,
+      offsetY: textHeight / 2,
       width: textWidth,
       height: textHeight
     }, props.Ref, GlobalValue.State!);
@@ -199,17 +200,17 @@ export const FontStyleProperty = (props: {   //テキストスタイル
     } else if (e.target.value == 'italic') {
       SetItalicCheck(!ItalicCheck)
     }
-    props.onBlur(true);
+    props.Update(true);
   }
   return (
     <Box className='PropertyInput'>
-      <span>Bold</span>
+      <span className='PropertyInputText'>Bold</span>
       <Checkbox
         value={'bold'}
         checked={BoldCheck}
         onChange={ChangeValue}
         color="default" />
-      <span>Italic</span>
+      <span className='PropertyInputText'>Italic</span>
       <Checkbox
         value={'italic'}
         checked={ItalicCheck}
@@ -218,10 +219,9 @@ export const FontStyleProperty = (props: {   //テキストスタイル
     </Box>
   )
 }
-
 export const FontFamilyProperty = (props: {   //テキストファミリー
   onChange: Function,
-  onBlur: (flag: boolean) => void,
+  Update: (flag: boolean) => void,
   Ref: AllPropertyShapeType
 }) => {
   const GlobalValue: {
@@ -245,9 +245,8 @@ export const FontFamilyProperty = (props: {   //テキストファミリー
   useEffect(() => {   //選択オブジェクト変更時
     if (GlobalValue.State!.Property && GlobalValue.State!.Property.type == 'Text') {
       if (Id != GlobalValue.State!.Property.id) {
-        const State = GlobalValue.State!.Property as AllPropertyShapeType;
-        SetValue(State!.fontFamily);
-        SetId(State!.id);
+        SetValue((GlobalValue.State!.Property as AllPropertyShapeType)!.fontFamily);
+        SetId(GlobalValue.State!.Property.id);
       }
     }
   }, [GlobalValue.State!.Property])
@@ -260,22 +259,21 @@ export const FontFamilyProperty = (props: {   //テキストファミリー
 
     const textWidth: number = Math.max(
       props.Ref!.text.split('\n').map((text) => {  //テキストの幅を取得
-        return textCtx!.measureText(text).width
+        return textCtx!.measureText(text).width + props.Ref!.letterSpacing * text.length
       }).reduce((el1, el2) => el1 >= el2 ? el1 : el2) //配列内の最大値を取得
       , 5);  //最小を設定 5
     const textHeight: number = props.Ref!.text.split('\n').length * props.Ref!.fontSize;
       
     props.onChange({
       FontFamily: e.target.value,
+      offsetX: textWidth / 2,
+      offsetY: textHeight / 2,
       width: textWidth,
       height: textHeight
     }, props.Ref, GlobalValue.State!);
     
     SetValue(e.target.value);
     SetChangeFlag(true);
-  }
-  const FocusElem = () => { //フォーカスしたときFlagを初期化
-    SetChangeFlag(false);
   }
   return (
     <Box className='PropertyInput'>
@@ -286,13 +284,141 @@ export const FontFamilyProperty = (props: {   //テキストファミリー
           value={Value}
           label="フォント"
           onChange={ChangeValue}
-          onFocus={FocusElem}
-          onBlur={() => props.onBlur(ChangeFlag)}
+          onFocus={() =>SetChangeFlag(false)}
+          onBlur={() => props.Update(ChangeFlag)}
         >
           {Fonts.map((font: string, i: number) => (
             <MenuItem key={`font${i}`} value={font}>{font}</MenuItem>
           ))}
         </Select>
+      </FormControl>
+    </Box>
+  )
+}
+export const AlignProperty = (props: {   //文字揃え
+  onChange: Function,
+  Update: (flag: boolean) => void,
+  Ref: AllPropertyShapeType
+}) => {
+  const GlobalValue: {
+    State?: {
+      Property: AllShape,
+      SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
+    }
+  } = useContext(GlobalContext);
+
+  const Fonts:string[] = [
+    ' left',
+    'center',
+    'right'
+  ];
+
+  const [Value, SetValue] = useState<string>(props.Ref!.align);
+  const [Id, SetId] = useState<string>(props.Ref!.id);
+
+  useEffect(() => {   //選択オブジェクト変更時
+    if (GlobalValue.State!.Property && GlobalValue.State!.Property.type == 'Text') {
+      if (Id != GlobalValue.State!.Property.id) {
+        SetValue((GlobalValue.State!.Property as AllPropertyShapeType)!.align);
+        SetId(GlobalValue.State!.Property.id);
+      }
+    }
+  }, [GlobalValue.State!.Property])
+
+  const [ChangeFlag, SetChangeFlag] = useState<boolean>(false); //変更したか
+  const ChangeValue = (e: SelectChangeEvent<any>) => {
+    props.onChange({
+      align: e.target.value,
+    }, props.Ref, GlobalValue.State!);
+    
+    SetValue(e.target.value);
+    SetChangeFlag(true);
+  }
+  return (
+    <Box className='PropertyInput'>
+      <FormControl fullWidth>
+        <InputLabel>文字揃え</InputLabel>
+        <Select
+          size='small'
+          value={Value}
+          label="文字揃え"
+          onChange={ChangeValue}
+          onFocus={() =>SetChangeFlag(false)}
+          onBlur={() => props.Update(ChangeFlag)}
+        >
+          {Fonts.map((font: string, i: number) => (
+            <MenuItem key={`font${i}`} value={font}>{font}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
+  )
+}
+export const LetterSpacingProperty = (props: {   //文字間隔
+  onChange: Function,
+  Update: (flag: boolean) => void,
+  Ref: AllPropertyShapeType
+}) => {
+  const GlobalValue: {
+    State?: {
+      Property: AllShape,
+      SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
+    }
+  } = useContext(GlobalContext);
+
+  const [Value, SetValue] = useState<string>(String(props.Ref!.letterSpacing));
+  const [Id, SetId] = useState<string>(props.Ref!.id);
+
+  useEffect(() => {   //選択オブジェクト変更時
+    if (GlobalValue.State!.Property && GlobalValue.State!.Property.type == 'Text') {
+      if (Id != GlobalValue.State!.Property.id) {
+        SetValue(String((GlobalValue.State!.Property as AllPropertyShapeType)!.letterSpacing));
+        SetId(GlobalValue.State!.Property.id);
+      }
+    }
+  }, [GlobalValue.State!.Property])
+
+  const [ChangeFlag, SetChangeFlag] = useState<boolean>(false); //変更したか
+  const ChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    
+    if(!isNaN(Number(e.target.value))){
+    const TargetValue: number = Number(e.target.value);
+    //文字のサイズを再定義する
+    const textCtx: CanvasRenderingContext2D = document.createElement('canvas').getContext('2d')!;
+    textCtx!.font = `${props.Ref!.fontStyle} ${props.Ref!.fontSize}px ${props.Ref!.fontFamily}`;
+    const textWidth: number = Math.max(
+      props.Ref!.text.split('\n').map((text) => {  //テキストの幅を取得
+        return textCtx!.measureText(text).width + TargetValue * text.length
+      }).reduce((el1, el2) => el1 >= el2 ? el1 : el2) //配列内の最大値を取得
+      , 5);  //最小を設定 5
+    const textHeight: number = props.Ref!.text.split('\n').length * props.Ref!.fontSize;
+
+    props.onChange({
+      letterSpacing: Math.max(TargetValue, 0),
+      offsetX: textWidth / 2,
+      offsetY: textHeight / 2,
+      width: textWidth,
+      height: textHeight
+    }, props.Ref, GlobalValue.State!);
+    SetValue(e.target.value);
+    SetChangeFlag(true);
+  }
+  }
+  return (
+    <Box className='PropertyInput'>
+      <FormControl variant="outlined">
+        <TextField
+          size='small'
+          type="number"
+          label="文字間隔"
+          value={Value}
+          inputProps={{
+            min: "0"
+          }}
+          onFocus={() =>SetChangeFlag(false)}
+          onBlur={() => props.Update(ChangeFlag)}
+          onChange={ChangeValue}
+        />
       </FormControl>
     </Box>
   )

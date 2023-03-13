@@ -39,6 +39,7 @@ export type Text = Shape & {
     fontFamily: string,
     fontSize: number,
     align:string,
+    letterSpacing: number,
     fontStyle: "",
 }
 
@@ -52,6 +53,7 @@ export type Circle = Shape& {
 }
 
 export type Image = Shape & {
+    width: number,
     src: string
 }
 

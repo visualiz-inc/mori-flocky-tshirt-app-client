@@ -10,7 +10,7 @@ import LayerUp from '../../../../../img/SideIcon/Layer/LayerUp.svg';
 import LayerDown from '../../../../../img/SideIcon/Layer/LayerDown.svg';
 import LayerBottom from '../../../../../img/SideIcon/Layer/LayerBottom.svg';
 
-export const Sort = () => {
+export const SortProperty = (props:{Update: (flag: boolean) => void}) => { //順番
     const GlobalValue: {
         State?: {
             Object: AllShape[][],
@@ -40,6 +40,7 @@ export const Sort = () => {
         Objects[GlobalValue.State!.ObjectInside][TopObject.index]=TopObject;    //元のindexに代入
         GlobalValue.State!.SetProperty(TopObject);
         GlobalValue.State!.SetObject(Objects);
+        props.Update(true);
     }}
     const onClockLayerUp = () => {      //上へ移動
         if(GlobalValue.State!.Property.zindex != 0){
@@ -59,6 +60,7 @@ export const Sort = () => {
         Objects[GlobalValue.State!.ObjectInside][TopObject.index]=TopObject;    //元のindexに代入
         GlobalValue.State!.SetProperty(TopObject);
         GlobalValue.State!.SetObject(Objects);
+        props.Update(true);
     }}
     const onClockLayerDown = () => {      //下へ移動
         if(GlobalValue.State!.Property.zindex != GlobalValue.State!.Object[GlobalValue.State!.ObjectInside].length - 1){
@@ -79,6 +81,7 @@ export const Sort = () => {
         Objects[GlobalValue.State!.ObjectInside][TopObject.index]=TopObject;    //元のindexに代入
         GlobalValue.State!.SetProperty(TopObject);
         GlobalValue.State!.SetObject(Objects);
+        props.Update(true);
     }}
     const onClockLayerBottom = () => {      //最背面へ移動
         if(GlobalValue.State!.Property.zindex != GlobalValue.State!.Object[GlobalValue.State!.ObjectInside].length){
@@ -98,6 +101,7 @@ export const Sort = () => {
         Objects[GlobalValue.State!.ObjectInside][TopObject.index]=TopObject;    //元のindexに代入
         GlobalValue.State!.SetProperty(TopObject);
         GlobalValue.State!.SetObject(Objects);
+        props.Update(true);
     }}
 
     return (

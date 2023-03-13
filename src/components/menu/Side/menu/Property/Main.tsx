@@ -4,7 +4,7 @@ import { AllShape, AllPropertyShapeType } from "../../../../../Types"
 import { useContext, useEffect, useState } from 'react';
 import { GlobalContext } from '../../../../providers/GlobalProvider';
 import '../.menu.css';
-import { BottomNavigation, BottomNavigationAction, Box, Button, Paper } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction, Box, Paper } from "@mui/material";
 
 import SquareIcon from '@mui/icons-material/Square';
 import CircleIcon from '@mui/icons-material/Circle';
@@ -14,8 +14,30 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import InterestsIcon from '@mui/icons-material/Interests';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 
-import { TextProperty, FontSizeProperty, FontStyleProperty, FontFamilyProperty } from './Text';
-import { Sort } from "./Sort";
+import {
+    TextProperty,
+    FontSizeProperty,
+    FontStyleProperty,
+    FontFamilyProperty,
+    AlignProperty,
+    LetterSpacingProperty
+} from './Text';
+import { WidthProperty, HeightProperty } from "./WidthHeight";
+import { CornerRadiusProperty } from './CornerRadius';
+import { SidesProperty } from "./Sides";
+import { RadiusProperty } from "./Radius";
+
+import {
+    PosXProperty,
+    PosYProperty,
+    RotationProperty,
+    ScaleXProperty,
+    ScaleYProperty,
+    FillProperty,
+    StrokeWidthProperty,
+    OpacityProperty
+} from './Common';
+import { SortProperty } from "./Sort";
 
 export const PropertyWindow = () => {
     const GlobalValue: {
@@ -55,7 +77,7 @@ export const PropertyWindow = () => {
         }
         State.SetProperty(newProperty);
     };
-    const BlurElem = (flag: boolean) => {    //フォーカス解除時
+    const UpdateElem = (flag: boolean) => {    //フォーカス解除時
         if (flag == true) {   //値が変更されていたらログ更新
             const LogIndex = Math.min(GlobalValue.State!.ObjectLogIndex + 1, GlobalValue.LogMaxTimes!);
             const MinIndex = Math.max(0, GlobalValue.State!.ObjectLog.length - GlobalValue.LogMaxTimes!);
@@ -73,7 +95,7 @@ export const PropertyWindow = () => {
         return (
 
             <Box id='PropertyMenu'>
-                <p>オブジェクトを<br/>選択してください</p>
+                <p>オブジェクトを<br />選択してください</p>
             </Box>
         )
     } else {
@@ -83,50 +105,76 @@ export const PropertyWindow = () => {
                 <Box id='PropertyMenu'>
                     {PageIndex == 0 && (
                         <>
+                            {Keys!.includes('width') && !Keys!.includes('text') && (
+                                <>
+                                    <WidthProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                                    <HeightProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                                </>
+                            )}
+                            {Keys!.includes('cornerRadius') && (
+                                <CornerRadiusProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                            )}
+                            {Keys!.includes('sides') && (
+                                <SidesProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                            )}
+                            {Keys!.includes('radius') && (
+                                <RadiusProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                            )}
                             {Keys!.includes('text') && (
                                 <>
-                                    <TextProperty onChange={ChangeProperty} onBlur={BlurElem} Ref={RefProperty} />
-                                    <FontSizeProperty onChange={ChangeProperty} onBlur={BlurElem} Ref={RefProperty} />
-                                    <FontStyleProperty onChange={ChangeProperty} onBlur={BlurElem} Ref={RefProperty} />
-                                    <FontFamilyProperty onChange={ChangeProperty} onBlur={BlurElem} Ref={RefProperty} />
+                                    <TextProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                                    <FontSizeProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                                    <FontStyleProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                                    <FontFamilyProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                                    <AlignProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                                    <LetterSpacingProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
                                 </>
                             )}
                         </>
                     )}
                     {PageIndex == 1 && (
-                        <p>共通</p>
+                        <>
+                            <PosXProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                            <PosYProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                            <RotationProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                            <ScaleXProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                            <ScaleYProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                            <FillProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                            <StrokeWidthProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                            <OpacityProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                        </>
                     )}
                     {PageIndex == 2 && (
-                        <Sort />
+                        <SortProperty Update={UpdateElem} />
                     )}
                 </Box>
                 <Paper id="PageMenu" elevation={3}>
-                        <BottomNavigation
-                            showLabels
-                            value={PageIndex}
-                            onChange={(e, value: number) => {
-                                SetPageIndex(value);
-                            }}
-                        >
-                            {RefProperty.type == 'Rect' && (
-                                <BottomNavigationAction value={0} label="短形" icon={<SquareIcon />} />
-                            )}
-                            {RefProperty.type == 'Circle' && (
-                                <BottomNavigationAction value={0} label="円形" icon={<CircleIcon />} />
-                            )}
-                            {RefProperty.type == 'RegularPolygon' && (
-                                <BottomNavigationAction value={0} label="多角形" icon={<PentagonIcon />} />
-                            )}
-                            {RefProperty.type == 'Text' && (
-                                <BottomNavigationAction value={0} label="文字" icon={<TextFormatIcon />} />
-                            )}
-                            {RefProperty.type == 'Image' && (
-                                <BottomNavigationAction value={0} label="画像" icon={<InsertPhotoIcon />} />
-                            )}
-                            <BottomNavigationAction value={1} label="共通" icon={<InterestsIcon />} />
-                            <BottomNavigationAction value={2} label="その他" icon={<HomeRepairServiceIcon />} />
-                        </BottomNavigation>
-                    </Paper>
+                    <BottomNavigation
+                        showLabels
+                        value={PageIndex}
+                        onChange={(e, value: number) => {
+                            SetPageIndex(value);
+                        }}
+                    >
+                        {RefProperty.type == 'Rect' && (
+                            <BottomNavigationAction value={0} label="短形" icon={<SquareIcon />} />
+                        )}
+                        {RefProperty.type == 'Circle' && (
+                            <BottomNavigationAction value={0} label="円形" icon={<CircleIcon />} />
+                        )}
+                        {RefProperty.type == 'RegularPolygon' && (
+                            <BottomNavigationAction value={0} label="多角形" icon={<PentagonIcon />} />
+                        )}
+                        {RefProperty.type == 'Text' && (
+                            <BottomNavigationAction value={0} label="文字" icon={<TextFormatIcon />} />
+                        )}
+                        {RefProperty.type == 'Image' && (
+                            <BottomNavigationAction value={0} label="画像" icon={<InsertPhotoIcon />} />
+                        )}
+                        <BottomNavigationAction value={1} label="共通" icon={<InterestsIcon />} />
+                        <BottomNavigationAction value={2} label="その他" icon={<HomeRepairServiceIcon />} />
+                    </BottomNavigation>
+                </Paper>
             </>
         )
     }

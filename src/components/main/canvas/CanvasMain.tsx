@@ -66,8 +66,6 @@ export const CanvasMain = () => {
     <Stage
       width={CanvasSize[0]}    //幅指定と微調整
       height={CanvasSize[1]}   //高さ指定と微調整
-      scaleX={0.5}
-      scaleY={0.5}
       onMouseDown={checkDeselect}
       onTouchStart={checkDeselect}
       style={{
