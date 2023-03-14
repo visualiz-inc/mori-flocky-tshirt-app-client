@@ -1,6 +1,6 @@
 import { Box, Button, FormControl, Slider, TextField, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import { ChromePicker, ColorChangeHandler } from 'react-color';
+import { ChromePicker, ColorChangeHandler, ColorResult } from 'react-color';
 import HexagonIcon from '@mui/icons-material/Hexagon';
 
 import { AllPropertyShapeType, AllShape } from "../../../../../Types"
@@ -352,19 +352,19 @@ export const FillProperty = (props: {   //塗りつぶし 枠線
 
   const [ChangeFlag, SetChangeFlag] = useState<boolean>(false); //変更したか
   const [OpenColorPallet, SetOpenColorPallet] = useState<number>(0); //カラーパレット開閉
-  const ChangeValue: ColorChangeHandler = (e: any) => {
-    const TargetValue = `rgba(${e.rgb.r},${e.rgb.g},${e.rgb.b},${e.rgb.a})`;
+  const ChangeValue = (color: ColorResult) => {
+    const TargetValue = `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
 
     if (OpenColorPallet == 1) {
       props.onChange({
         fill: TargetValue,
       }, props.Ref, GlobalValue.State!);
-      SetFillValue(e.rgb);
+      SetFillValue(TargetValue);
     } else if (OpenColorPallet == 2) {
       props.onChange({
         stroke: TargetValue,
       }, props.Ref, GlobalValue.State!);
-      SetStrokeValue(e.rgb);
+      SetStrokeValue(TargetValue);
     }
     SetChangeFlag(true);
   }

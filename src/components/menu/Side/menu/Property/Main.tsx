@@ -139,8 +139,12 @@ export const PropertyWindow = () => {
                             <RotationProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
                             <ScaleXProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
                             <ScaleYProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
-                            <FillProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
-                            <StrokeWidthProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                            {Keys!.includes('fill') && (
+                                <>
+                                <FillProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                                <StrokeWidthProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
+                                </>
+                            )}
                             <OpacityProperty onChange={ChangeProperty} Update={UpdateElem} Ref={RefProperty} />
                         </>
                     )}

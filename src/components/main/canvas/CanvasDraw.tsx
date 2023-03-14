@@ -1,11 +1,12 @@
 import React, { useRef, useEffect, useContext } from "react";
-import { Rect, Circle, RegularPolygon, Text, Transformer } from 'react-konva';
+import { Rect, Circle, RegularPolygon, Text, Transformer, Image } from 'react-konva';
 import { GlobalContext } from "../../providers/GlobalProvider";
 
 import { AllShape, Shape } from '../../../Types'
 import { KonvaEventObject } from "konva/lib/Node";
 import Konva from "konva";
 import { Box } from "konva/lib/shapes/Transformer";
+import useImage from 'use-image';
 
 export const CanvasDraw = (props: {
     index: number,
@@ -79,7 +80,6 @@ export const CanvasDraw = (props: {
             scaleY: Math.round(node.scaleY() * 100) / 100, //scaleyを更新
         }
     }
-
     return (
         <>
             {props.shapeProps.type == 'Rect' && (
@@ -93,6 +93,9 @@ export const CanvasDraw = (props: {
             )}
             {props.shapeProps.type == 'Text' && (
                 <Text {...DrawProperty} />
+            )}
+            {props.shapeProps.type == 'Image' && (
+                <DrawImage DrawProperty={DrawProperty}/>
             )}
 
 
@@ -143,3 +146,8 @@ export const CanvasDraw = (props: {
         </>
     );
 };
+
+const DrawImage = (props:{DrawProperty:any}) => {
+    const [image] = useImage(props.DrawProperty.src);
+    return <Image {...props.DrawProperty} image={image} />;
+  };

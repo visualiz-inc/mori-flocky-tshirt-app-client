@@ -167,3 +167,21 @@
     bottom: 0;
     width: 100%;
 }
+
+#ImageMenu{
+    flex-flow: column;
+    margin-top: 5px;
+    height: 100%;
+    text-align: center;
+    overflow-y: scroll;
+}
+#ImageMenu::-webkit-scrollbar {
+    width: 10px;
+}
+#ImageMenu::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+}
+#ImageMenu img{
+    margin-top: 10px;
+    width: 120px;
+}

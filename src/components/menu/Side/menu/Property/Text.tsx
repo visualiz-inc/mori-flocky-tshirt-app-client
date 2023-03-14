@@ -169,7 +169,6 @@ export const FontStyleProperty = (props: {   //テキストスタイル
   const ChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     let fontStyle: string = '';
     if ((e.target.value == 'bold' && !BoldCheck) || (e.target.value != 'bold' && BoldCheck)) {
-      console.log(BoldCheck)
       fontStyle += 'bold ';
     }
     if ((e.target.value == 'italic' && !ItalicCheck) || (e.target.value != 'italic' && ItalicCheck)) {
@@ -308,7 +307,7 @@ export const AlignProperty = (props: {   //文字揃え
   } = useContext(GlobalContext);
 
   const Fonts:string[] = [
-    ' left',
+    'left',
     'center',
     'right'
   ];

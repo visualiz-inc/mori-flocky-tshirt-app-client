@@ -17,10 +17,7 @@ export type Shape = {
     scaleX: number,
     scaleY: number,
     rotation: number,
-    fill: Color,
     opacity: number,
-    strokeWidth: number,
-    stroke: Color,
     index: number,
     zindex: number, // 階層の深さ
     id: string,
@@ -30,6 +27,9 @@ export type Rect = Shape & {
     width: number,
     height: number,
     cornerRadius: number,
+    fill: Color,
+    stroke: Color,
+    strokeWidth: number
 }
 
 export type Text = Shape & {
@@ -41,19 +41,29 @@ export type Text = Shape & {
     align:string,
     letterSpacing: number,
     fontStyle: "",
+    fill: Color,
+    stroke: Color,
+    strokeWidth: number
 }
 
 export type RegularPolygon = Shape & {
     sides: number,
     radius: number,
+    fill: Color,
+    stroke: Color,
+    strokeWidth: number
 }
 
 export type Circle = Shape& { 
     radius: number,
+    fill: Color,
+    stroke: Color,
+    strokeWidth: number
 }
 
 export type Image = Shape & {
     width: number,
+    height: number,
     src: string
 }
 
@@ -75,4 +85,4 @@ export type TshirtType = ItemType & {
     Thickness: number,
 }
 
-export type MaskType = ItemType
+export type MaskType = ItemType;
