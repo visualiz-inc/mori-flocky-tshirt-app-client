@@ -1,6 +1,6 @@
 import { Box, Button, FormControl, Slider, TextField, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import { ChromePicker, ColorChangeHandler, ColorResult } from 'react-color';
+import { ChromePicker, ColorResult } from 'react-color';
 import HexagonIcon from '@mui/icons-material/Hexagon';
 
 import { AllPropertyShapeType, AllShape } from "../../../../../Types"
@@ -334,8 +334,8 @@ export const FillProperty = (props: {   //塗りつぶし 枠線
   useEffect(() => {   //選択オブジェクト変更時
     if (GlobalValue.State!.Property) {
       if (Id != GlobalValue.State!.Property.id) {
-        SetFillValue(String(GlobalValue.State!.Property.fill));
-        SetStrokeValue(String(GlobalValue.State!.Property.stroke));
+        SetFillValue(String((GlobalValue.State!.Property as AllPropertyShapeType)!.fill));
+        SetStrokeValue(String((GlobalValue.State!.Property as AllPropertyShapeType)!.stroke));
         SetId(GlobalValue.State!.Property.id);
       }
     }
@@ -443,7 +443,7 @@ export const StrokeWidthProperty = (props: {   //枠の太さ
   useEffect(() => {   //選択オブジェクト変更時
     if (GlobalValue.State!.Property) {
       if (Id != GlobalValue.State!.Property.id) {
-        SetValue(String(GlobalValue.State!.Property.strokeWidth));
+        SetValue(String((GlobalValue.State!.Property as AllPropertyShapeType)!.strokeWidth));
         SetId(GlobalValue.State!.Property.id);
       }
     }

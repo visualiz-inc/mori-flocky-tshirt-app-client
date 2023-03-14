@@ -30,7 +30,6 @@ export const Sidebar = () => {
             SetObjectLog: React.Dispatch<React.SetStateAction<AllShape[][][]>>,         //↑の更新
             ObjectLogIndex: number,                                                     //ログのインデックス番号
             SetObjectLogIndex: React.Dispatch<React.SetStateAction<number>>,            //↑の更新
-            RefObjectLog: AllShape[][] | null,                                          //ひとつ前のログ保存
             MainWindowProperty: string,                                                 //メインウィンドウの種類
             SetMainWindowProperty: React.Dispatch<React.SetStateAction<string>>         //上の更新
             Property: AllShape | null,                                                  //選択しているオブジェクトの情報

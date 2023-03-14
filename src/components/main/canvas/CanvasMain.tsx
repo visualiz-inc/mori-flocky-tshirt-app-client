@@ -6,13 +6,12 @@ import { Prop, Shape, AllShape } from '../../../Types'
 import { CanvasDraw } from './CanvasDraw';
 
 import { GlobalContext } from "../../providers/GlobalProvider";
-import { DropEvent, FileRejection, useDropzone } from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 import { Box } from '@mui/material';
 
 import { AddImage } from '../../../CreateObject';
 
 export const CanvasMain = () => {
-
   const GlobalValue: {
     State?: {
       Object: AllShape[][];
@@ -21,13 +20,13 @@ export const CanvasMain = () => {
       SetObjectLog: React.Dispatch<React.SetStateAction<AllShape[][][]>>,
       ObjectLogIndex: number,
       SetObjectLogIndex: React.Dispatch<React.SetStateAction<number>>,
-      RefObjectLog: AllShape[][] | null,
-      SetRefObjectLog: React.Dispatch<React.SetStateAction<AllShape[][] | null>>,
       ObjectInside: number,
       ObjectID: number,
       SetObjectID: React.Dispatch<React.SetStateAction<number>>,
       Property: AllShape | null,
-      SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
+      SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>,
+      Images: string[],
+      SetImages: React.Dispatch<React.SetStateAction<string[]>>
     },
     LogMaxTimes?: number,
     CanvasProperty?: Prop
@@ -62,7 +61,7 @@ export const CanvasMain = () => {
     return (SortA.zindex > SortB.zindex) ? -1 : 1;
   });
 
-  function onDrop<T extends File>(acceptedFiles: T[], fileRejections: FileRejection[], event: DropEvent) {
+  function onDrop<T extends File>(acceptedFiles: T[]) {
     if (isDragReject) { //許可されない形式がドロップされたときTrue
       return;
     }
@@ -93,7 +92,7 @@ export const CanvasMain = () => {
     accept: {
       'image/png': [],
       'image/jpeg': [],
-      'image/svg+xml': [],
+      'image/gif': []
     },
   });
 

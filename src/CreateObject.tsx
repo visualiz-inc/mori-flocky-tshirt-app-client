@@ -9,12 +9,10 @@ const AddCommonProgram = (  //共通する処理
             SetObjectLog: React.Dispatch<React.SetStateAction<AllShape[][][]>>,
             ObjectLogIndex: number,
             SetObjectLogIndex: React.Dispatch<React.SetStateAction<number>>,
-            RefObjectLog: AllShape[][] | null,
-            SetRefObjectLog: React.Dispatch<React.SetStateAction<AllShape[][] | null>>,
             ObjectInside: number,
             ObjectID: number,
             SetObjectID: React.Dispatch<React.SetStateAction<number>>,
-            SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
+            SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>,
         }
         LogMaxTimes?: number,
     },
@@ -49,12 +47,12 @@ export const AddImage = (   //画像追加
             SetObjectLog: React.Dispatch<React.SetStateAction<AllShape[][][]>>,
             ObjectLogIndex: number,
             SetObjectLogIndex: React.Dispatch<React.SetStateAction<number>>,
-            RefObjectLog: AllShape[][] | null,
-            SetRefObjectLog: React.Dispatch<React.SetStateAction<AllShape[][] | null>>,
             ObjectInside: number,
             ObjectID: number,
             SetObjectID: React.Dispatch<React.SetStateAction<number>>,
-            SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>
+            SetProperty: React.Dispatch<React.SetStateAction<AllShape | null>>,
+            Images: string[],
+            SetImages: React.Dispatch<React.SetStateAction<string[]>>
         },
         LogMaxTimes?: number
     },
@@ -63,10 +61,10 @@ export const AddImage = (   //画像追加
     const Scale = Math.round(DefaultSize / (width >= height ? width : height) * 100) / 100;
     const NewObject = { //追加するオブジェクト
         type: 'Image',
-        x: Math.round(width * Scale / 2 * 100) / 100, 
+        x: Math.round(width * Scale / 2 * 100) / 100,
         y: Math.round(height * Scale / 2 * 100) / 100,
         scaleX: Scale, scaleY: Scale,
-        offsetX: Math.round(width / 2 * 100) / 100, 
+        offsetX: Math.round(width / 2 * 100) / 100,
         offsetY: Math.round(height / 2 * 100) / 100,
         rotation: 0,
         opacity: 1,
@@ -74,8 +72,11 @@ export const AddImage = (   //画像追加
         zindex: 0,
         id: `image${GlobalValue.State!.ObjectID}`,
         width, height,
-        src
+        imageIndex :GlobalValue.State!.Images.length
     }
-
-    AddCommonProgram(GlobalValue, NewObject)
+    AddCommonProgram(GlobalValue, NewObject);
+    GlobalValue.State!.SetImages([
+        ...GlobalValue.State!.Images,
+        src
+    ])
 }

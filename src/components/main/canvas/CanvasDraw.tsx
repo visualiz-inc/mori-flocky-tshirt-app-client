@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext } from "react";
+import React, { useRef, useEffect, useContext, useState } from "react";
 import { Rect, Circle, RegularPolygon, Text, Transformer, Image } from 'react-konva';
 import { GlobalContext } from "../../providers/GlobalProvider";
 
@@ -147,7 +147,13 @@ export const CanvasDraw = (props: {
     );
 };
 
-const DrawImage = (props:{DrawProperty:any}) => {
-    const [image] = useImage(props.DrawProperty.src);
-    return <Image {...props.DrawProperty} image={image} />;
+const DrawImage = (props:{DrawProperty:any}) => {   //画像
+    const GlobalValue: {
+        State?: {
+            Images: string[];
+        }
+    } = useContext(GlobalContext);
+
+    const [image] = useImage(GlobalValue.State!.Images[props.DrawProperty.imageIndex]);
+    return <Image {...props.DrawProperty} image={image} />
   };

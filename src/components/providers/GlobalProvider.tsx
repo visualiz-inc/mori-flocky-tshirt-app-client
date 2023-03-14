@@ -14,9 +14,9 @@ export const GlobalProvider = (props: { children: ReactNode }) => {
   const [ObjectInside,SetObjectInside] = useState<number>(0);           //裏表
   const [ObjectLog,SetObjectLog] = useState<AllShape[][][]>([JSON.parse(JSON.stringify(Object))]);  //オブジェクトログ
   const [ObjectLogIndex,SetObjectLogIndex] = useState<number>(0);       //オブジェクトログのインデックス
-  const [RefObjectLog,SetRefObjectLog] = useState<AllShape[][] | null>(null)  //バグ防止用バックアップ
   const [Property, SetProperty] = useState<AllShape | null>(null);  //選択オブジェクト
   const [ObjectID, SetObjectID] = useState<number>(0);  //オブジェクトID用カウント
+  const [Images, SetImages] = useState<string[]>(ObjectJsonData["Image"]);  //画像
 
   const [Color, SetColor] = useState<string>('ホワイト'); //アイテムの色設定
 
@@ -39,11 +39,11 @@ export const GlobalProvider = (props: { children: ReactNode }) => {
       ObjectLog,SetObjectLog,
       ObjectLogIndex,SetObjectLogIndex,
       ObjectID, SetObjectID,
-      RefObjectLog,SetRefObjectLog,
       Property, SetProperty,
       Color, SetColor,
       Item, SetItem,
-      MainWindowProperty, SetMainWindowProperty
+      MainWindowProperty, SetMainWindowProperty,
+      Images, SetImages,
     }
   }
 

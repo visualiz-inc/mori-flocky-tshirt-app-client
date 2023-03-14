@@ -61,15 +61,15 @@ export type Circle = Shape& {
     strokeWidth: number
 }
 
-export type Image = Shape & {
+export type Picture = Shape & {
     width: number,
     height: number,
-    src: string
+    imageIndex:number
 }
 
-export type AllShape = Rect | Text | RegularPolygon | Circle | Image;
+export type AllShape = Rect | Text | RegularPolygon | Circle | Picture;
 
-export type AllPropertyShapeType = (Shape & Rect & RegularPolygon & Circle & Text & Image) | null;
+export type AllPropertyShapeType = (Shape & Rect & RegularPolygon & Circle & Text & Picture) | null;
 
 export type ItemType = {
     ItemType: string[],
